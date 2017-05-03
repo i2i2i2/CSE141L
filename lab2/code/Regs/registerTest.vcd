@@ -1,0 +1,226 @@
+$date
+	Wed May  3 02:45:23 2017
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module RegsFile_tb $end
+$var wire 8 ! reg2 [7:0] $end
+$var wire 8 " reg1 [7:0] $end
+$var wire 1 # flipout $end
+$var wire 1 $ flagout $end
+$var reg 1 % CLK $end
+$var reg 1 & flagin $end
+$var reg 1 ' flipin $end
+$var reg 1 ( isReg1 $end
+$var reg 1 ) isReg2 $end
+$var reg 1 * isRegW $end
+$var reg 1 + isWrite $end
+$var reg 3 , read1 [2:0] $end
+$var reg 3 - read2 [2:0] $end
+$var reg 8 . writeData [7:0] $end
+$var reg 1 / writeFlag $end
+$var reg 1 0 writeFlip $end
+$var reg 3 1 writeReg [2:0] $end
+$scope module registers $end
+$var wire 1 % CLK $end
+$var wire 1 & flagin $end
+$var wire 1 ' flipin $end
+$var wire 1 ( isReg1 $end
+$var wire 1 ) isReg2 $end
+$var wire 1 * isRegW $end
+$var wire 1 + isWrite $end
+$var wire 3 2 read1 [2:0] $end
+$var wire 3 3 read2 [2:0] $end
+$var wire 8 4 writeData [7:0] $end
+$var wire 1 / writeFlag $end
+$var wire 1 0 writeFlip $end
+$var wire 3 5 writeReg [2:0] $end
+$var wire 8 6 reg2 [7:0] $end
+$var wire 8 7 reg1 [7:0] $end
+$var wire 8 8 outReg2 [7:0] $end
+$var wire 8 9 outReg1 [7:0] $end
+$var wire 8 : outAcc2 [7:0] $end
+$var wire 8 ; outAcc1 [7:0] $end
+$var wire 1 < isWriteReg $end
+$var wire 1 = isWriteAcc $end
+$var wire 1 # flipout $end
+$var wire 1 $ flagout $end
+$scope module accReg $end
+$var wire 1 % CLK $end
+$var wire 8 > acc1 [7:0] $end
+$var wire 8 ? acc2 [7:0] $end
+$var wire 1 = isWrite $end
+$var wire 3 @ read1 [2:0] $end
+$var wire 3 A read2 [2:0] $end
+$var wire 8 B writeData [7:0] $end
+$var wire 3 C writeReg [2:0] $end
+$upscope $end
+$scope module bitReg $end
+$var wire 1 % CLK $end
+$var wire 1 & flagin $end
+$var wire 1 $ flagout $end
+$var wire 1 ' flipin $end
+$var wire 1 # flipout $end
+$var wire 1 / writeFlag $end
+$var wire 1 0 writeFlip $end
+$var reg 1 D flag $end
+$var reg 1 E flip $end
+$upscope $end
+$scope module regReg $end
+$var wire 1 % CLK $end
+$var wire 1 < isWrite $end
+$var wire 2 F read1 [1:0] $end
+$var wire 2 G read2 [1:0] $end
+$var wire 8 H reg1 [7:0] $end
+$var wire 8 I reg2 [7:0] $end
+$var wire 8 J writeData [7:0] $end
+$var wire 2 K writeReg [1:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx K
+bx J
+bx I
+bx H
+bx G
+bx F
+xE
+xD
+bx C
+bx B
+bx A
+bx @
+bx ?
+bx >
+x=
+x<
+bx ;
+bx :
+bx 9
+bx 8
+bx 7
+bx 6
+bx 5
+bx 4
+bx 3
+bx 2
+bx 1
+x0
+x/
+bx .
+bx -
+bx ,
+x+
+x*
+x)
+x(
+x'
+x&
+x%
+x$
+x#
+bx "
+bx !
+$end
+#50
+0%
+#100
+b1101001 "
+b1101001 7
+b1101001 ;
+b1101001 >
+b0 K
+0<
+1=
+b0 F
+1%
+b1101001 .
+b1101001 4
+b1101001 B
+b1101001 J
+0*
+b0 1
+b0 5
+b0 C
+1+
+0(
+b0 ,
+b0 2
+b0 @
+#150
+0%
+#200
+bx "
+bx 7
+1%
+1(
+#250
+0%
+#300
+b11110000 !
+b11110000 6
+b11110000 8
+b11110000 I
+b1101001 "
+b1101001 7
+1<
+0=
+b1 K
+b1 G
+1%
+0(
+b11110000 .
+b11110000 4
+b11110000 B
+b11110000 J
+1*
+b1 1
+b1 5
+b1 C
+1)
+b1 -
+b1 3
+b1 A
+#350
+0%
+#400
+bx !
+bx 6
+1%
+0)
+#450
+0%
+#500
+0<
+1%
+0+
+b1111 .
+b1111 4
+b1111 B
+b1111 J
+0*
+#550
+0%
+#600
+1#
+1E
+1%
+10
+1'
+#650
+0%
+#700
+1%
+00
+0'
+#750
+0%
+#800
+1%
