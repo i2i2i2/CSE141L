@@ -15,7 +15,8 @@ module AccumulatorRegs(
   input[7:0]    writeData,  // 8-bit data to write to
   input         CLK,
   output[7:0]   acc1,       // data at addr1
-  output[7:0]   acc2        // data at addr2
+  output[7:0]   acc2,       // data at addr2
+  output[7:0]   acc3        // data in $acc5 always outputting
 );
 
   // regs
@@ -24,6 +25,7 @@ module AccumulatorRegs(
   // always read
   assign        acc1 = accumulators[read1];
   assign        acc2 = accumulators[read2];
+  assign        acc3 = accumulators[5];
 
   // clocked write
   always @(posedge CLK) begin

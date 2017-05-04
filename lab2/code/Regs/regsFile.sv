@@ -6,7 +6,7 @@
   Description:  RegsFile, contain 6-accumulator, 4 regular, 2 single-bit
                 Input   read1, isReg1, read2, isReg2, isWrite, writeReg,
                         writeData, isRegW, flipin, flagin, CLK
-                Output  reg1, reg2, flagOut, flipOut
+                Output  reg1, reg2, reg3, flagOut, flipOut
 *****************************************************************************/
 `include "AccumulatorRegs.sv"
 `include "RegularRegs.sv"
@@ -28,6 +28,7 @@ module RegsFile(
   input         CLK,
   output[7:0]   reg1,         // data in read1
   output[7:0]   reg2,         // data in read2
+  output[7:0]   reg3,         // $acc5, always outputting
   output        flipout,      // 1-bit flip output
   output        flagout       // 1-bit flag output
 );
@@ -44,7 +45,7 @@ module RegsFile(
   assign        isWriteAcc = isRegW? 1'b0: isWrite;
 
   // connect module
-  AccumulatorRegs accReg(read1, read2, isWriteAcc, writeReg, writeData, CLK, outAcc1, outAcc2);
+  AccumulatorRegs accReg(read1, read2, isWriteAcc, writeReg, writeData, CLK, outAcc1, outAcc2, reg3);
   RegularRegs regReg(read1[1:0], read2[1:0], isWriteReg, writeReg[1:0], writeData, CLK, outReg1, outReg2);
   SingleBitRegs bitReg(flipin, flagin, writeFlip, writeFlag, CLK, flipout, flagout);
 
