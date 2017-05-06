@@ -18,6 +18,9 @@
                   5-6   00 for normal, 01 - 11 for different addition
                   7     if ignore flip bit
 *****************************************************************************/
+`include "Adder.sv"
+`include "Shifter.sv"
+
 module ALU (
   input[7:0]    srcA,           // first src
   input[7:0]    srcB,           // second src
@@ -63,7 +66,7 @@ module ALU (
   assign        flipout = srcA[7];
 
   // module
-  shifter ALUshifter(srcA, control[2:1], flagin, shifted, shiftFlag);
-  adder ALUadder(srcA, addSrc, flagin, control[2], calcFlip, sum, addFlag);
+  Shifter ALUshifter(srcA, control[2:1], flagin, shifted, shiftFlag);
+  Adder ALUadder(srcA, addSrc, flagin, control[2], calcFlip, sum, addFlag);
 
 endmodule

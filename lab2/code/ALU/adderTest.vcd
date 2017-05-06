@@ -1,0 +1,111 @@
+$date
+	Fri May  5 16:58:23 2017
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module Adder_tb $end
+$var wire 8 ! sum [7:0] $end
+$var wire 1 " co $end
+$var reg 8 # add1 [7:0] $end
+$var reg 8 $ add2 [7:0] $end
+$var reg 1 % ci $end
+$var reg 1 & flag $end
+$var reg 1 ' flip $end
+$scope module testAdder $end
+$var wire 8 ( add1 [7:0] $end
+$var wire 8 ) add2 [7:0] $end
+$var wire 8 * add2_flip [7:0] $end
+$var wire 1 % ci $end
+$var wire 1 + ci_flag $end
+$var wire 1 , ci_flip $end
+$var wire 1 " co $end
+$var wire 1 & flag $end
+$var wire 1 ' flip $end
+$var wire 8 - sum [7:0] $end
+$var wire 1 . co_flip $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+x.
+bx -
+x,
+x+
+bx *
+bx )
+bx (
+x'
+x&
+x%
+bx $
+bx #
+x"
+bx !
+$end
+#100
+0"
+b10010100 !
+b10010100 -
+0.
+0,
+0+
+b1010101 *
+0'
+0&
+0%
+b1010101 $
+b1010101 )
+b111111 #
+b111111 (
+#200
+1,
+1"
+1+
+b0 *
+b0 !
+b0 -
+1.
+1&
+1%
+b0 $
+b0 )
+b11111111 #
+b11111111 (
+#300
+b11110001 !
+b11110001 -
+0"
+0+
+b11110001 *
+1'
+0&
+b1110 $
+b1110 )
+#400
+0,
+1"
+1+
+b11111111 *
+b11111111 !
+b11111111 -
+0.
+1&
+b0 $
+b0 )
+b0 #
+b0 (
+#500
+1,
+b1 !
+b1 -
+0+
+b0 *
+0%
+b11111111 $
+b11111111 )
+#600

@@ -1,0 +1,106 @@
+#! /usr/local/Cellar/icarus-verilog/10.1.1/bin/vvp
+:ivl_version "10.1 (stable)" "(v10_1_1)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 10;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x7f904dd00c80 .scope module, "Shifter_tb" "Shifter_tb" 2 13;
+ .timescale -9 -10;
+v0x7f904dd11d80_0 .var "flag", 0 0;
+v0x7f904dd11e10_0 .net "flagout", 0 0, L_0x7f904dd13030;  1 drivers
+v0x7f904dd11ea0_0 .var "sel", 1 0;
+v0x7f904dd11f30_0 .net "shifted", 7 0, L_0x7f904dd12c30;  1 drivers
+v0x7f904dd11fe0_0 .var "val", 7 0;
+S_0x7f904dd00de0 .scope module, "testShifter" "Shifter" 2 21, 3 10 0, S_0x7f904dd00c80;
+ .timescale -9 -10;
+    .port_info 0 /INPUT 8 "val"
+    .port_info 1 /INPUT 2 "sel"
+    .port_info 2 /INPUT 1 "flag"
+    .port_info 3 /OUTPUT 8 "shifted"
+    .port_info 4 /OUTPUT 1 "flagout"
+L_0x7f904dd12c30 .functor BUFZ 8, L_0x7f904dd12a10, C4<00000000>, C4<00000000>, C4<00000000>;
+v0x7f904dd00f40_0 .net *"_s11", 6 0, L_0x7f904dd123b0;  1 drivers
+v0x7f904dd10fe0_0 .net *"_s16", 6 0, L_0x7f904dd12640;  1 drivers
+v0x7f904dd11080_0 .net *"_s2", 0 0, L_0x7f904dd120b0;  1 drivers
+v0x7f904dd11130_0 .net *"_s21", 6 0, L_0x7f904dd12840;  1 drivers
+v0x7f904dd111e0_0 .net *"_s24", 7 0, L_0x7f904dd12a10;  1 drivers
+v0x7f904dd112d0_0 .net *"_s26", 3 0, L_0x7f904dd12ab0;  1 drivers
+L_0x100422050 .functor BUFT 1, C4<00>, C4<0>, C4<0>, C4<0>;
+v0x7f904dd11380_0 .net *"_s29", 1 0, L_0x100422050;  1 drivers
+v0x7f904dd11430_0 .net *"_s33", 0 0, L_0x7f904dd12ce0;  1 drivers
+v0x7f904dd114d0_0 .net *"_s35", 0 0, L_0x7f904dd12d80;  1 drivers
+v0x7f904dd115e0_0 .net *"_s37", 0 0, L_0x7f904dd12e90;  1 drivers
+v0x7f904dd11690_0 .net *"_s4", 6 0, L_0x7f904dd121b0;  1 drivers
+L_0x100422008 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x7f904dd11740_0 .net/2u *"_s8", 0 0, L_0x100422008;  1 drivers
+v0x7f904dd117f0_0 .net "flag", 0 0, v0x7f904dd11d80_0;  1 drivers
+v0x7f904dd11890_0 .net "flagout", 0 0, L_0x7f904dd13030;  alias, 1 drivers
+v0x7f904dd11930_0 .net "sel", 1 0, v0x7f904dd11ea0_0;  1 drivers
+v0x7f904dd119e0_0 .net "shifted", 7 0, L_0x7f904dd12c30;  alias, 1 drivers
+v0x7f904dd11a90 .array "shifts", 3 0;
+v0x7f904dd11a90_0 .net v0x7f904dd11a90 0, 7 0, L_0x7f904dd12250; 1 drivers
+v0x7f904dd11a90_1 .net v0x7f904dd11a90 1, 7 0, L_0x7f904dd124f0; 1 drivers
+v0x7f904dd11a90_2 .net v0x7f904dd11a90 2, 7 0, L_0x7f904dd126e0; 1 drivers
+v0x7f904dd11a90_3 .net v0x7f904dd11a90 3, 7 0, L_0x7f904dd128e0; 1 drivers
+v0x7f904dd11c50_0 .net "val", 7 0, v0x7f904dd11fe0_0;  1 drivers
+L_0x7f904dd120b0 .part v0x7f904dd11fe0_0, 7, 1;
+L_0x7f904dd121b0 .part v0x7f904dd11fe0_0, 1, 7;
+L_0x7f904dd12250 .concat [ 7 1 0 0], L_0x7f904dd121b0, L_0x7f904dd120b0;
+L_0x7f904dd123b0 .part v0x7f904dd11fe0_0, 1, 7;
+L_0x7f904dd124f0 .concat [ 7 1 0 0], L_0x7f904dd123b0, L_0x100422008;
+L_0x7f904dd12640 .part v0x7f904dd11fe0_0, 1, 7;
+L_0x7f904dd126e0 .concat [ 7 1 0 0], L_0x7f904dd12640, v0x7f904dd11d80_0;
+L_0x7f904dd12840 .part v0x7f904dd11fe0_0, 0, 7;
+L_0x7f904dd128e0 .concat [ 1 7 0 0], v0x7f904dd11d80_0, L_0x7f904dd12840;
+L_0x7f904dd12a10 .array/port v0x7f904dd11a90, L_0x7f904dd12ab0;
+L_0x7f904dd12ab0 .concat [ 2 2 0 0], v0x7f904dd11ea0_0, L_0x100422050;
+L_0x7f904dd12ce0 .reduce/and v0x7f904dd11ea0_0;
+L_0x7f904dd12d80 .part v0x7f904dd11fe0_0, 7, 1;
+L_0x7f904dd12e90 .part v0x7f904dd11fe0_0, 0, 1;
+L_0x7f904dd13030 .functor MUXZ 1, L_0x7f904dd12e90, L_0x7f904dd12d80, L_0x7f904dd12ce0, C4<>;
+    .scope S_0x7f904dd00c80;
+T_0 ;
+    %delay 100, 0;
+    %pushi/vec4 129, 0, 8;
+    %store/vec4 v0x7f904dd11fe0_0, 0, 8;
+    %pushi/vec4 0, 0, 2;
+    %store/vec4 v0x7f904dd11ea0_0, 0, 2;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x7f904dd11d80_0, 0, 1;
+    %vpi_call 2 26 "$strobe", "1 10000001 >>> 1 = %b %b (11000000 1)", v0x7f904dd11f30_0, v0x7f904dd11e10_0 {0 0 0};
+    %delay 100, 0;
+    %pushi/vec4 129, 0, 8;
+    %store/vec4 v0x7f904dd11fe0_0, 0, 8;
+    %pushi/vec4 1, 0, 2;
+    %store/vec4 v0x7f904dd11ea0_0, 0, 2;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x7f904dd11d80_0, 0, 1;
+    %vpi_call 2 30 "$strobe", "1 10000001 >> 1 = %b %b (01000000 1)", v0x7f904dd11f30_0, v0x7f904dd11e10_0 {0 0 0};
+    %delay 100, 0;
+    %pushi/vec4 1, 0, 8;
+    %store/vec4 v0x7f904dd11fe0_0, 0, 8;
+    %pushi/vec4 2, 0, 2;
+    %store/vec4 v0x7f904dd11ea0_0, 0, 2;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x7f904dd11d80_0, 0, 1;
+    %vpi_call 2 34 "$strobe", "1 00000001 >> 1 = %b %b (10000000 1)", v0x7f904dd11f30_0, v0x7f904dd11e10_0 {0 0 0};
+    %delay 100, 0;
+    %pushi/vec4 129, 0, 8;
+    %store/vec4 v0x7f904dd11fe0_0, 0, 8;
+    %pushi/vec4 3, 0, 2;
+    %store/vec4 v0x7f904dd11ea0_0, 0, 2;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x7f904dd11d80_0, 0, 1;
+    %vpi_call 2 38 "$strobe", "10000001 1 << 1 = %b %b (1 00000011)", v0x7f904dd11e10_0, v0x7f904dd11f30_0 {0 0 0};
+    %delay 100, 0;
+    %vpi_call 2 41 "$finish" {0 0 0};
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "Shifter_tb.sv";
+    "./Shifter.sv";
