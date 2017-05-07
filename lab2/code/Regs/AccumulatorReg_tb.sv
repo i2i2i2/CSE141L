@@ -15,9 +15,9 @@ module AccumulatorRegs_tb;
   reg         isWrite, CLK;
   reg[2:0]    read1, read2, writeReg;
   reg[7:0]    writeData;
-  wire[7:0]   acc1, acc2;
+  wire[7:0]   acc1, acc2, acc3;
 
-  AccumulatorRegs testAccReg(read1, read2, isWrite, writeReg, writeData, CLK, acc1, acc2);
+  AccumulatorRegs testAccReg(read1, read2, isWrite, writeReg, writeData, CLK, acc1, acc2, acc3);
 
   initial begin
 
@@ -43,6 +43,8 @@ module AccumulatorRegs_tb;
     writeReg = 3'b001; isWrite = 1'b1; writeData = 8'b11111111; read1 = 3'b001;
 
     #10;
+    writeReg = 3'b101; isWrite = 1'b1; writeData = 8'b10101010; read2 = 3'b101;
+    $strobe("%b", acc2);
 
     #10;
     read1 = 3'b000;

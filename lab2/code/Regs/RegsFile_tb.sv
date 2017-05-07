@@ -17,12 +17,12 @@ module RegsFile_tb;
   reg[2:0]    read1, read2, writeReg;
   reg         isReg1, isReg2, isWrite, isRegW, flipin, flagin, writeFlip,
               writeFlag, CLK;
-  wire[7:0]   reg1, reg2;
+  wire[7:0]   reg1, reg2, reg3;
   wire        flipout, flagout;
 
   RegsFile registers(read1, isReg1, read2, isReg2, isWrite, writeReg,
         writeData, isRegW, flipin, writeFlip, flagin, writeFlag, CLK,
-        reg1, reg2, flipout, flagout);
+        reg1, reg2, reg3, flipout, flagout);
 
   initial begin
 

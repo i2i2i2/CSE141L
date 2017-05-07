@@ -41,8 +41,8 @@ module RegsFile(
   // output
   assign        reg1 = isReg1? outReg1: outAcc1;
   assign        reg2 = isReg2? outReg2: outAcc2;
-  assign        isWriteReg = isRegW? isWrite: 1'b0;
-  assign        isWriteAcc = isRegW? 1'b0: isWrite;
+  assign        isWriteReg = isRegW & isWrite;
+  assign        isWriteAcc = (!isRegW) & isWrite;
 
   // connect module
   AccumulatorRegs accReg(read1, read2, isWriteAcc, writeReg, writeData, CLK, outAcc1, outAcc2, reg3);
