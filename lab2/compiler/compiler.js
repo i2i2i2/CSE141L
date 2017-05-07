@@ -94,6 +94,9 @@ assembly.forEach((line, index) => {
   }
 });
 
+// verify
+// verify(bitcodes, branchTaken);
+
 // turn parsed result to instr code
 bitcodes = bitcodes.map(code => padding(parseInt(code, 2).toString(16), 3));
 bitcodes = bitcodes.join("\n");
@@ -142,9 +145,54 @@ function processBranch(line, index, instr) {
   if (branchTaken.length < 4) {
     branchTaken.push(label);
   }
-  var branch = padding(label.toString(2), 32).substr(30, 32);
+
+  var branch = padding(branchTaken.indexOf(label).toString(2), 2);
 
   return instr.pre + instr.opcode + branch;
+}
+
+function verify(bitcodes, branches) {
+  var regsArr = {"00": "$t0", "01": "$t1", "10": "$t2", "11": "$t3"};
+
+  var str = "";
+  bitcodes.forEach(code => {
+    var instr;
+    if (code.substr(0,1) == "0") {
+      instr = "set     " + parseInt(code.substr(-8), 2);
+      str += instr + "\n";
+
+    } else {
+      instr = revProperty(code.substr(1,6));
+      var next;
+      if (instrTable[instr].reg) {
+        next = regsArr[code.substr(-2)];
+      } else if (instrTable[instr].branch) {
+        next = branches[parseInt(code.substr(-2), 2)];
+      } else {
+        next = "";
+      }
+      str += backing(instr) + next + "\n";
+    }
+  })
+
+  console.log(str);
+
+  function revProperty(code) {
+    for (var key in instrTable) {
+      if (instrTable.hasOwnProperty(key)) {
+        if (instrTable[key].opcode == code)
+          return key;
+      }
+    }
+    return {};
+  }
+
+  function backing(instr) {
+    for (var i = instr.length; i < 8; i++) {
+      instr += " ";
+    }
+    return instr;
+  }
 }
 
 function processReg(line, index, instr) {
