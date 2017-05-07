@@ -17,6 +17,7 @@ module RegsFile(
   input         isReg1,       // is read1 a regular register
   input[2:0]    read2,        // 3-bit read1
   input         isReg2,       // is read2 a regular register
+  input         isReg3,       // is reg3 from $t0, or $acc5
   input         isWrite,      // need write?
   input[2:0]    writeReg,     // 3-bit reg to write to
   input[7:0]    writeData,    // data to write
@@ -34,19 +35,20 @@ module RegsFile(
 );
 
   // wires
-  wire[7:0]     outAcc1, outAcc2;
-  wire[7:0]     outReg1, outReg2;
+  wire[7:0]     outAcc1, outAcc2, outAcc3;
+  wire[7:0]     outReg1, outReg2, outReg3;
   wire          isWriteReg, isWriteAcc;
 
   // output
   assign        reg1 = isReg1? outReg1: outAcc1;
   assign        reg2 = isReg2? outReg2: outAcc2;
+  assign        reg3 = isReg3? outReg3: outAcc3;
   assign        isWriteReg = isRegW & isWrite;
   assign        isWriteAcc = (!isRegW) & isWrite;
 
   // connect module
-  AccumulatorRegs accReg(read1, read2, isWriteAcc, writeReg, writeData, CLK, outAcc1, outAcc2, reg3);
-  RegularRegs regReg(read1[1:0], read2[1:0], isWriteReg, writeReg[1:0], writeData, CLK, outReg1, outReg2);
+  AccumulatorRegs accReg(read1, read2, isWriteAcc, writeReg, writeData, CLK, outAcc1, outAcc2, outAcc3);
+  RegularRegs regReg(read1[1:0], read2[1:0], isWriteReg, writeReg[1:0], writeData, CLK, outReg1, outReg2, outReg3);
   SingleBitRegs bitReg(flipin, flagin, writeFlip, writeFlag, CLK, flipout, flagout);
 
 endmodule

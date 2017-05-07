@@ -1,5 +1,5 @@
 $date
-	Sun May  7 01:32:46 2017
+	Sun May  7 06:05:44 2017
 $end
 $version
 	Icarus Verilog
@@ -18,49 +18,53 @@ $var reg 1 ' flagin $end
 $var reg 1 ( flipin $end
 $var reg 1 ) isReg1 $end
 $var reg 1 * isReg2 $end
-$var reg 1 + isRegW $end
-$var reg 1 , isWrite $end
-$var reg 3 - read1 [2:0] $end
-$var reg 3 . read2 [2:0] $end
-$var reg 8 / writeData [7:0] $end
-$var reg 1 0 writeFlag $end
-$var reg 1 1 writeFlip $end
-$var reg 3 2 writeReg [2:0] $end
+$var reg 1 + isReg3 $end
+$var reg 1 , isRegW $end
+$var reg 1 - isWrite $end
+$var reg 3 . read1 [2:0] $end
+$var reg 3 / read2 [2:0] $end
+$var reg 8 0 writeData [7:0] $end
+$var reg 1 1 writeFlag $end
+$var reg 1 2 writeFlip $end
+$var reg 3 3 writeReg [2:0] $end
 $scope module registers $end
 $var wire 1 & CLK $end
 $var wire 1 ' flagin $end
 $var wire 1 ( flipin $end
 $var wire 1 ) isReg1 $end
 $var wire 1 * isReg2 $end
-$var wire 1 + isRegW $end
-$var wire 1 , isWrite $end
-$var wire 1 3 isWriteAcc $end
-$var wire 1 4 isWriteReg $end
-$var wire 3 5 read1 [2:0] $end
-$var wire 3 6 read2 [2:0] $end
-$var wire 8 7 writeData [7:0] $end
-$var wire 1 0 writeFlag $end
-$var wire 1 1 writeFlip $end
-$var wire 3 8 writeReg [2:0] $end
-$var wire 8 9 reg3 [7:0] $end
-$var wire 8 : reg2 [7:0] $end
-$var wire 8 ; reg1 [7:0] $end
-$var wire 8 < outReg2 [7:0] $end
-$var wire 8 = outReg1 [7:0] $end
-$var wire 8 > outAcc2 [7:0] $end
-$var wire 8 ? outAcc1 [7:0] $end
+$var wire 1 + isReg3 $end
+$var wire 1 , isRegW $end
+$var wire 1 - isWrite $end
+$var wire 1 4 isWriteAcc $end
+$var wire 1 5 isWriteReg $end
+$var wire 8 6 outAcc3 [7:0] $end
+$var wire 8 7 outReg3 [7:0] $end
+$var wire 3 8 read1 [2:0] $end
+$var wire 3 9 read2 [2:0] $end
+$var wire 8 : writeData [7:0] $end
+$var wire 1 1 writeFlag $end
+$var wire 1 2 writeFlip $end
+$var wire 3 ; writeReg [2:0] $end
+$var wire 8 < reg3 [7:0] $end
+$var wire 8 = reg2 [7:0] $end
+$var wire 8 > reg1 [7:0] $end
+$var wire 8 ? outReg2 [7:0] $end
+$var wire 8 @ outReg1 [7:0] $end
+$var wire 8 A outAcc2 [7:0] $end
+$var wire 8 B outAcc1 [7:0] $end
 $var wire 1 $ flipout $end
 $var wire 1 % flagout $end
 $scope module accReg $end
 $var wire 1 & CLK $end
-$var wire 8 @ acc1 [7:0] $end
-$var wire 8 A acc2 [7:0] $end
-$var wire 8 B acc3 [7:0] $end
-$var wire 1 3 isWrite $end
-$var wire 3 C read1 [2:0] $end
-$var wire 3 D read2 [2:0] $end
-$var wire 8 E writeData [7:0] $end
-$var wire 3 F writeReg [2:0] $end
+$var wire 8 C acc1 [7:0] $end
+$var wire 8 D acc2 [7:0] $end
+$var wire 8 E acc3 [7:0] $end
+$var wire 1 4 isWrite $end
+$var wire 3 F read1 [2:0] $end
+$var wire 3 G read2 [2:0] $end
+$var wire 8 H writeData [7:0] $end
+$var wire 3 I writeReg [2:0] $end
 $upscope $end
 $scope module bitReg $end
 $var wire 1 & CLK $end
@@ -68,34 +72,39 @@ $var wire 1 ' flagin $end
 $var wire 1 % flagout $end
 $var wire 1 ( flipin $end
 $var wire 1 $ flipout $end
-$var wire 1 0 writeFlag $end
-$var wire 1 1 writeFlip $end
-$var reg 1 G flag $end
-$var reg 1 H flip $end
+$var wire 1 1 writeFlag $end
+$var wire 1 2 writeFlip $end
+$var reg 1 J flag $end
+$var reg 1 K flip $end
 $upscope $end
 $scope module regReg $end
 $var wire 1 & CLK $end
-$var wire 1 4 isWrite $end
-$var wire 2 I read1 [1:0] $end
-$var wire 2 J read2 [1:0] $end
-$var wire 8 K reg1 [7:0] $end
-$var wire 8 L reg2 [7:0] $end
-$var wire 8 M writeData [7:0] $end
-$var wire 2 N writeReg [1:0] $end
+$var wire 1 5 isWrite $end
+$var wire 2 L read1 [1:0] $end
+$var wire 2 M read2 [1:0] $end
+$var wire 8 N reg1 [7:0] $end
+$var wire 8 O reg2 [7:0] $end
+$var wire 8 P reg3 [7:0] $end
+$var wire 8 Q writeData [7:0] $end
+$var wire 2 R writeReg [1:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
+bx R
+bx Q
+bx P
+bx O
 bx N
 bx M
 bx L
-bx K
-bx J
+xK
+xJ
 bx I
-xH
-xG
+bx H
+bx G
 bx F
 bx E
 bx D
@@ -113,15 +122,15 @@ bx 9
 bx 8
 bx 7
 bx 6
-bx 5
+x5
 x4
-x3
-bx 2
+bx 3
+x2
 x1
-x0
+bx 0
 bx /
 bx .
-bx -
+x-
 x,
 x+
 x*
@@ -139,94 +148,134 @@ $end
 0&
 #100
 b1101001 #
-b1101001 ;
-b1101001 ?
-b1101001 @
-b0 N
-04
-13
-b0 I
+b1101001 >
+b1101001 B
+b1101001 C
+b0 R
+05
+14
+b0 L
 1&
-b1101001 /
-b1101001 7
-b1101001 E
-b1101001 M
-0+
-b0 2
+b1101001 0
+b1101001 :
+b1101001 H
+b1101001 Q
+0,
+b0 3
+b0 ;
+b0 I
+1-
+0)
+b0 .
 b0 8
 b0 F
-1,
-0)
-b0 -
-b0 5
-b0 C
 #150
 0&
 #200
 bx #
-bx ;
+bx >
 1&
 1)
 #250
 0&
 #300
 b11110000 "
-b11110000 :
-b11110000 <
-b11110000 L
+b11110000 =
+b11110000 ?
+b11110000 O
 b1101001 #
-b1101001 ;
-14
-03
-b1 N
-b1 J
+b1101001 >
+15
+04
+b1 R
+b1 M
 1&
 0)
-b11110000 /
-b11110000 7
-b11110000 E
-b11110000 M
-1+
-b1 2
-b1 8
-b1 F
+b11110000 0
+b11110000 :
+b11110000 H
+b11110000 Q
+1,
+b1 3
+b1 ;
+b1 I
 1*
-b1 .
-b1 6
-b1 D
+b1 /
+b1 9
+b1 G
 #350
 0&
 #400
 bx "
-bx :
+bx =
 1&
 0*
 #450
 0&
 #500
-04
+05
 1&
+0-
+b1111 0
+b1111 :
+b1111 H
+b1111 Q
 0,
-b1111 /
-b1111 7
-b1111 E
-b1111 M
-0+
 #550
 0&
 #600
 1$
-1H
+1K
 1&
-11
+12
 1(
 #650
 0&
 #700
 1&
-01
+02
 0(
 #750
 0&
 #800
+b10110100 !
+b10110100 <
+b10110100 6
+b10110100 E
+14
+1&
+1-
+b10110100 0
+b10110100 :
+b10110100 H
+b10110100 Q
+b101 3
+b101 ;
+b101 I
+0+
+#850
+0&
+#900
+b11111100 @
+b11111100 N
+b11111100 7
+b11111100 P
+15
+04
+b0 R
+b11111100 !
+b11111100 <
+1&
+1,
+b11111100 0
+b11111100 :
+b11111100 H
+b11111100 Q
+b0 3
+b0 ;
+b0 I
+1+
+#950
+0&
+#1000
 1&

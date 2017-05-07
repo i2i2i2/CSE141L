@@ -74,7 +74,7 @@ module ALU_tb;
     srcA = 8'b00000000; srcB = 8'b11111111; flagin = 1'b0; flipin = 1'b1;
     control = 9'b1000xx001;
     $strobe("00000000 + 11111111 (00000001) + 0 = %b %b (0 00000001)", flagout, result);
-    
+
     /* shifter test */
     #10;
     srcA = 8'b10000001; flagin = 1'b0;
@@ -127,12 +127,12 @@ module ALU_tb;
 
     /* test special add */
     #10;
-    srcA = 8'b00000000; srcB = 8'b00000000; control = 9'b0000xx011;
-    $strobe("00000000 + (00000000 < 0? 0: 1) = %b (00000001)", result);
+    srcA = 8'b00000000; srcB = 8'b00000000; srcC = 8'b10101010; control = 9'b0000xx011;
+    $strobe("00000000 + (00000000 < 0? 0: 10101010) = %b (10101010)", result);
 
     #10;
-    srcA = 8'b00000000; srcB = 8'b10000000; control = 9'b0000xx011;
-    $strobe("00000000 + (10000000 < 0? 0: 1) = %b (00000000)", result);
+    srcA = 8'b00000000; srcB = 8'b10000000; srcC = 8'b10101010; control = 9'b0000xx011;
+    $strobe("00000000 + (10000000 < 0? 0: 10101010) = %b (00000000)", result);
 
     #10;
     srcA = 8'b00000000; srcB = 8'b10100000; srcC = 8'b10101111; control = 9'b0000xx101;

@@ -15,7 +15,8 @@ module RegularRegs(
   input[7:0]    writeData,    // 8-bit data to write
   input         CLK,
   output[7:0]   reg1,         // output read1
-  output[7:0]   reg2          // output read2
+  output[7:0]   reg2,         // output read2
+  output[7:0]   reg3          // always output $t0
 );
 
 // regs
@@ -24,6 +25,7 @@ reg[7:0]      registers[0:3];
 // always read
 assign        reg1 = registers[read1];
 assign        reg2 = registers[read2];
+assign        reg3 = registers[0];
 
 // clocked write
 always @(posedge CLK) begin

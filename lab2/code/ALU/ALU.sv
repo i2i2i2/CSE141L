@@ -50,7 +50,7 @@ module ALU (
 
   // add src base on control[5,6]
   assign        srcAdd[0] = srcB;
-  assign        srcAdd[1] = {7'b0000000, ~srcB[7]};
+  assign        srcAdd[1] = {8{!srcB[7]}} & srcC;
   assign        srcAdd[2] = {7'b0000000, ~|(srcB[7:4] ^ srcC[7:4])};
   assign        srcAdd[3] = {7'b0000000, flagin ^ flipin};
   assign        addSrc = control[8]? 8'b00000001 : srcAdd[control[2:1]];

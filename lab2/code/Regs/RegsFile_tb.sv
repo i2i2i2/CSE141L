@@ -16,11 +16,11 @@ module RegsFile_tb;
   reg[7:0]    writeData;
   reg[2:0]    read1, read2, writeReg;
   reg         isReg1, isReg2, isWrite, isRegW, flipin, flagin, writeFlip,
-              writeFlag, CLK;
+              writeFlag, CLK, isReg3;
   wire[7:0]   reg1, reg2, reg3;
   wire        flipout, flagout;
 
-  RegsFile registers(read1, isReg1, read2, isReg2, isWrite, writeReg,
+  RegsFile registers(read1, isReg1, read2, isReg2, isReg3, isWrite, writeReg,
         writeData, isRegW, flipin, writeFlip, flagin, writeFlag, CLK,
         reg1, reg2, reg3, flipout, flagout);
 
@@ -58,6 +58,14 @@ module RegsFile_tb;
     #10;    // disable write
     flipin = 1'b0; writeFlip = 1'b0;
     $strobe("Should not change $flip = %b (1), $flag = %b (x)", flipout, flagout);
+
+    #10;    // write to acc5, check reg3
+    isReg3 = 1'b0; writeReg = 3'b101; writeData = 8'b10110100; isRegW = 1'b0; isWrite = 1'b1;
+    $strobe("reg3 = %b (10110100)", reg3);
+
+    #10;    // write to acc5, check reg3
+    isReg3 = 1'b1; writeReg = 3'b000; writeData = 8'b11111100; isRegW = 1'b1;
+    $strobe("reg3 = %b (11111100)", reg3);
 
     #10;
     $finish;
