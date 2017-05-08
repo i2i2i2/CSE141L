@@ -7,16 +7,23 @@
                 Take 2-bit control signal, output 8-bit address
 *****************************************************************************/
 module LookupTable(
-  control,
-  addr
+  input[1:0] control, // 2-bit control signal
+  output[7:0] pc_addr // 8-bit pc to jump to
 );
 
-// input
-input[1:0]    control;              // 2-bit control signal
+// declare an 8 bit register with 4 entries 
+reg[7:0] branches[0:3];
 
-// output
-output[7:0]   pc_addr;              // 8-bit pc to jump to
+// assign the pc_addr
+assign pc_addr = branches[control];
 
-// TODO
+
+initial begin
+	
+	// initialize the hex reads from the hex.txt file
+	$readmemh("hex.txt", branches);   
+
+end
+
 
 endmodule
