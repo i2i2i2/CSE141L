@@ -1,32 +1,27 @@
-/*****************************************************************************
-  File Name:    ProgramCounter.sv
-  Author:       Chenxu Jiang
-                DingCheng Hu
-  Date:         Apr 29, 2017
-  Description:  pc, increment by clock, or set by branch
-                Input   CLK, isBranch, branchAddr, init, halt
-                Output  PC value
-*****************************************************************************/
-
-module ProgramCounter (
-  init,                     // initial signal set pc to 0
-  halt,                     // ending signal halt pc
-  isBranch,                 // if to take the branch
-  branchAddr,               // branch address
-  CLK,                      // clock signal
-  pc_addr                   // output instruction address
+module program_counter 
+(
+  input CLK,
+  input halt,
+  input init,
+  input isBranch, 
+  input [7:0] branchAddr,
+  //input reset,
+  output [7:0] pc_addr
 );
 
-// inputs
-input         init;
-input         halt;
-input         isBranch;
-input[7:0]    branchAddr;
 
-// outputs
-output[7:0]   pc_addr;
-
-// TODO
-
+always @(posedge CLK)
+  //initialize the pc 
+  if(init)
+    pc_addr <= 0;
+  else if(halt)  //halt
+    pc_addr <= pc_addr;
+  else if(isBranch) //branch
+    pc_addr <= branchAddr;
+  else //increment
+    pc_addr <= pc_addr + 1;
+ 
 endmodule
+	
+	
 
