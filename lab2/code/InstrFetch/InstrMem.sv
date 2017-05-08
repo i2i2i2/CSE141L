@@ -8,16 +8,12 @@
                 output  Instruction bit code at position
 *****************************************************************************/
 module InstrMem (
-  pc,                         // pc value
-  Instr                       // machine code at position
+  input[7:0] pc,                         // pc value 8-bit
+  output[8:0] Instr                       // machine code at position; 9-bit instruction code
 );
 
-// inputs
-input[7:0]  pc;               // 8-bit pc
+logic[8:0] inst_mem[255]				 //ROM array to initialize all of the elements  
+assign instr = inst_mem[pc]   		 	 //read from the address
 
-// outputs
-output[8:0] instr;            // 9-bit instruction code
-
-// TODO
 
 endmodule
