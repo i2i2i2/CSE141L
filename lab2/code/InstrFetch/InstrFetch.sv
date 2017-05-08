@@ -7,33 +7,30 @@
                 Input   CLK, isBranch, Branch
                 Output  Instruction bit code.
 *****************************************************************************/
-`include "program_counter.sv"
+`include "ProgramCounter.sv"
 `include "InstrMem.sv"
 `include "LookupTable.sv"
 
 module InstrFetch (
-  input			init,                       // initial set pc to 0
-  input 		halt,                       // halt pc, make pc stay.
-  input     	isBranch,                   // 1 bit, if need branch
-  input[1:0] 	branchCtrl,                 // 2-bit, which branch to take
-  input 		CLK,
+  input         init,                       // initial set pc to 0
+  input         halt,                       // halt pc, make pc stay.
+  input         isBranch,                   // 1 bit, if need branch
+  input         resultALU,                  // 1 bit ALU calc if branch taken
+  input[1:0]    branchCtrl,                 // 2-bit, which branch to take
+  input         CLK,
   output[8:0] 	Instr                       // output 9 bit instruction code
 );
 
-// wires: program counter and branchaddress
-wire[7:0] pc, branch;
+  // wires: program counter and branchaddress
+  wire[7:0]     PC, branch;
+  wire          writePC;
 
+  // wiring
+  assign        writePC = isBranch & resultALU;
 
-// lookuptable with branchCtrl as input and pc address as output 
-LookupTable(branchCtrl, branch)
-
-// program counter takes the clk, halt, init, isbranch, branchaddress output pc)
-program_counter(CLK, halt, init, isBranch, branch, pc)
-
-
-// instruction memory with pc as input and instruction code as output
-InstrMem InMem(pc, Instr);
-
+  // connect modules
+  LookupTable branchTable(branchCtrl, branch);
+  ProgramCounter intPC(branch, halt, init, writePC, CLK, PC);
+  InstrMem InMem(pc, Instr);
 
 endmodule
-

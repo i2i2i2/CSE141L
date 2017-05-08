@@ -6,31 +6,29 @@
   Description:  input: CLK, DataAddress, ReadMem, WriteMem, DataIn
 				output: DataOut
 *****************************************************************************/
+module dataMem(
+  input[7:0]    addr,             // input address for read or write
+  input[7:0]    dataIn,           // input data
+  input         memOp,            // 1 for write 0 for read
+  input         CLK,
+  output[7:0]   dataOut           // output data
+);
+  // data memory
+  reg[7:0]      mem[0: 255];
 
+  // always output
+  assign        dataOut = mem[addr];
 
-module data_mem(
-  input              CLK,
-  input [7:0]        DataAddress,
-  input              ReadMem,
-  input              WriteMem,
-  input [7:0]       DataIn,
-  output logic[7:0] DataOut);
-
-  logic [7:0] my_memory [256];
-
-//  initial 
-//    $readmemh("dataram_init.list", my_memory);
-  always_comb
-    if(ReadMem) begin  //read memory
-      DataOut = my_memory[DataAddress];
-	  $display("Memory read M[%d] = %d",DataAddress,DataOut);
-    end else //else output 0s
-      DataOut = 16'bZ;
-
-  always_ff @ (posedge CLK)
-    if(WriteMem) begin  // write memory
-      my_memory[DataAddress] = DataIn;
-	  $display("Memory write M[%d] = %d",DataAddress,DataIn);
+  // write on posedge
+  always @(posedge CLK) begin
+    if(memOp) begin  // write memory
+      mem[addr] <= dataIn;
     end
+  end
+
+  // initial
+  initial begin
+    $readmemh("*.mem", my_memory);
+  end
 
 endmodule
