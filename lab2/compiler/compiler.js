@@ -105,8 +105,8 @@ branchTaken = branchTaken.join("\n");
 
 // store to File
 try {
-  fs.writeFileSync(filename + ".instr", bitcodes);
-  fs.writeFileSync(filename + ".branc", branchTaken);
+  fs.writeFileSync("instr", bitcodes);
+  fs.writeFileSync("branch", branchTaken);
 
 } catch (err) {
   console.log(RED + "Error: " + RESET + err);
