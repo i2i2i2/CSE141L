@@ -32,4 +32,14 @@ module SingleBitRegs (
     end
   end
 
+  // initial
+  initial begin
+    flag = 1'b0;
+    flip = 1'b0;
+
+    $dumpfile("reg.vcd");
+    $dumpvars(0, flag);
+    $dumpvars(0, flip);
+  end
+
 endmodule

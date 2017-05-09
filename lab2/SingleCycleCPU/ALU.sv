@@ -76,4 +76,8 @@ module ALU (
   Shifter ALUshifter(srcA, control[6:5], flagin, shifted, shiftFlag);
   Adder ALUadder(srcA, addSrc, flagin, control[6], calcFlip, sum, addFlag);
 
+  initial begin
+    $dumpfile("reg.vcd");
+    $dumpvars(0, srcAdd[1]);
+  end
 endmodule

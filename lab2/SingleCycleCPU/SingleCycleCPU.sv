@@ -29,7 +29,7 @@ module SingleCycleCPU;
       writeFlag, memOp, regSrc);
   RegsFile RF(read1, isReg1, read2, isReg2, isReg3, isWrite, writeReg,
       result, regData, dataOut, srcA, regSrc, isRegW, flip0, writeFlip,
-      flag0, writeFlip, CLK, srcA, srcB, srcC, flip1, flag1);
+      flag0, writeFlag, CLK, srcA, srcB, srcC, flip1, flag1);
   ALU ALU0(srcA, srcB, srcC, flag1, flip1, control, result, flag0, flip0, branchResult);
   dataMem M(srcA, srcB, memOp, CLK, dataOut);
 
@@ -48,7 +48,7 @@ module SingleCycleCPU;
   end
 
   initial begin
-    #500 $finish;
+    #25 $finish;
   end
 
 endmodule

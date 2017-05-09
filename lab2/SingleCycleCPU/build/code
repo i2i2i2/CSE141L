@@ -1,6 +1,7 @@
-set   2
-ldm0  $t0
-set   3
-stm0  $t0
+set   35
+ldr1  $t0
+loop:
+dec1
+b1ne31  loop
 
 halt

@@ -515,8 +515,9 @@ module InstrDecode(
         end
         6'b100001: begin  // dec1
           // other write control stay at 0
-          halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; writeBranch = 1'b0;
+          halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0; writeBranch = 1'b0;
+          // set flag
+          writeFlag = 1'b1;
           // $acc1 go to read1
           read1 = 3'b001; isReg1 = 1'b0;
           // write register
@@ -666,7 +667,7 @@ module InstrDecode(
           writeBranch = 1'b0; halt = 1'b0; writeFlag = 1'b0;
           memOp = 1'b0; isWrite = 1'b0;
           // read1 from $acc2
-          read1 = 3'b010; isReg2 = 1'b0;
+          read1 = 3'b010; isReg1 = 1'b0;
           // set flip
           writeFlip = 1'b1;
           // dont cares: read2, isReg2, isReg3, regData, branch
@@ -679,13 +680,13 @@ module InstrDecode(
           writeFlag = 1'b1; isWrite = 1'b1;
           writeReg = 3'b011; isRegW = 1'b0;
           // read1 from $acc3
-          read1 = 3'b011; isRegW = 1'b0;
+          read1 = 3'b011; isReg1 = 1'b0;
           // read2 from $acc2
-          read2 = 3'b010; isRegW = 1'b0;
+          read2 = 3'b010; isReg2 = 1'b0;
           // read3 from $t0
           isReg3 = 1'b1;
           // control
-          control = 9'b0001xx011;
+          control = 9'b0000xx011;
           // regSrc from ALUout
           regSrc = 3'b001;
           // dont cares: branch, regData
@@ -697,13 +698,13 @@ module InstrDecode(
           writeFlag = 1'b1; isWrite = 1'b1;
           writeReg = 3'b100; isRegW = 1'b0;
           // read1 from $acc4
-          read1 = 3'b100; isRegW = 1'b0;
+          read1 = 3'b100; isReg1 = 1'b0;
           // read2 from $acc2
-          read2 = 3'b010; isRegW = 1'b0;
+          read2 = 3'b010; isReg2 = 1'b0;
           // read3 from $t0
           isReg3 = 1'b1;
           // control
-          control = 9'b0001xx011;
+          control = 9'b0000xx011;
           // regSrc from ALUout
           regSrc = 3'b001;
           // dont cares: branch, regData

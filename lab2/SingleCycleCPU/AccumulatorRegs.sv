@@ -21,6 +21,7 @@ module AccumulatorRegs(
 
   // regs
   reg[7:0]      accumulators[0:7];
+  integer       idx;
 
   // always read
   assign        acc1 = accumulators[read1];
@@ -32,6 +33,13 @@ module AccumulatorRegs(
     if (isWrite) begin
       accumulators[writeReg] <= writeData;
     end
+  end
+
+  // initial
+  initial begin
+    $dumpfile("reg.vcd");
+    for (idx = 0; idx < 6; idx++)
+      $dumpvars(0, accumulators[idx]);
   end
 
 endmodule

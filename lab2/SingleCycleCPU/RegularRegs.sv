@@ -19,19 +19,27 @@ module RegularRegs(
   output[7:0]   reg3          // always output $t0
 );
 
-// regs
-reg[7:0]      registers[0:3];
+  // regs
+  reg[7:0]      registers[0:3];
+  integer       idx;
 
-// always read
-assign        reg1 = registers[read1];
-assign        reg2 = registers[read2];
-assign        reg3 = registers[0];
+  // always read
+  assign        reg1 = registers[read1];
+  assign        reg2 = registers[read2];
+  assign        reg3 = registers[0];
 
-// clocked write
-always @(posedge CLK) begin
-  if (isWrite) begin
-    registers[writeReg] <= writeData;
+  // clocked write
+  always @(posedge CLK) begin
+    if (isWrite) begin
+      registers[writeReg] <= writeData;
+    end
   end
-end
+
+  // initial
+  initial begin
+    $dumpfile("reg.vcd");
+    for (idx = 0; idx < 4; idx++)
+      $dumpvars(0, registers[idx]);
+  end
 
 endmodule
