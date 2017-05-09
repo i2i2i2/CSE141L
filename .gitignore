@@ -1,0 +1,11 @@
+*.DS_Store
+*.aux
+*.fdb*
+*.fls
+*.fls
+*.log
+*.synctex.gz
+*.vvp
+*.vcd
+*.branc
+*.instr
