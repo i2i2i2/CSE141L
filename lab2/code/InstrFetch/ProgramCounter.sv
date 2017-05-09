@@ -10,26 +10,24 @@
 module ProgramCounter (
   input[7:0]    branchAddr,       // possible branch addr to take
   input         halt,             // freeze pc if true
-  input         init,             // start pc at 0
+  input         init,             // initialize
   input         isBranch,         // if take the branch
   input         CLK,
-  output[7:0]   pcAddr            // output address
+  output  reg[7:0]  pcAddr        // output address
 );
-
-  reg[7:0]      pcAddr;           // internally store as addr
 
   always @(posedge CLK) begin
     if(init) begin                // init
-      pc_addr <= 0;
+      pcAddr <= 0;
 
     end else if(halt) begin       // halt
-      pc_addr <= pc_addr;
+      pcAddr <= pcAddr;
 
     end else if(isBranch) begin   // take branch
-      pc_addr <= branchAddr;
+      pcAddr <= branchAddr;
 
     end else begin                //increment
-      pc_addr <= pc_addr + 1;
+      pcAddr <= pcAddr + 1;
     end
   end
 endmodule

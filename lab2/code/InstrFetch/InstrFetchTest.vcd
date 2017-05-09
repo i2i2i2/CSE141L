@@ -1,0 +1,163 @@
+$date
+	Mon May  8 17:10:42 2017
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module InstrFetch_tb $end
+$var wire 9 ! instr [8:0] $end
+$var reg 1 " CLK $end
+$var reg 2 # branchCtrl [1:0] $end
+$var reg 1 $ halt $end
+$var reg 1 % init $end
+$var reg 1 & isBranch $end
+$var reg 1 ' resultALU $end
+$scope module IFTest $end
+$var wire 1 " CLK $end
+$var wire 2 ( branchCtrl [1:0] $end
+$var wire 1 $ halt $end
+$var wire 1 % init $end
+$var wire 1 & isBranch $end
+$var wire 1 ' resultALU $end
+$var wire 1 ) writePC $end
+$var wire 8 * branch [7:0] $end
+$var wire 8 + PC [7:0] $end
+$var wire 9 , Instr [8:0] $end
+$scope module InMem $end
+$var wire 9 - instr [8:0] $end
+$var wire 8 . pc [7:0] $end
+$upscope $end
+$scope module branchTable $end
+$var wire 8 / branch [7:0] $end
+$var wire 2 0 control [1:0] $end
+$upscope $end
+$scope module intPC $end
+$var wire 1 " CLK $end
+$var wire 8 1 branchAddr [7:0] $end
+$var wire 1 $ halt $end
+$var wire 1 % init $end
+$var wire 1 ) isBranch $end
+$var reg 8 2 pcAddr [7:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx 2
+bx 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+bx *
+x)
+bx (
+x'
+x&
+1%
+x$
+bx #
+x"
+bx !
+$end
+#50
+b0 !
+b0 ,
+b0 -
+b0 +
+b0 .
+b0 2
+1"
+#100
+0)
+0"
+0%
+0&
+0$
+#150
+b1 !
+b1 ,
+b1 -
+b1 +
+b1 .
+b1 2
+1"
+#200
+0"
+#250
+b10 !
+b10 ,
+b10 -
+b10 +
+b10 .
+b10 2
+1"
+#300
+0"
+#350
+b11 !
+b11 ,
+b11 -
+b11 +
+b11 .
+b11 2
+1"
+#400
+0"
+#450
+b100 !
+b100 ,
+b100 -
+b100 +
+b100 .
+b100 2
+1"
+#500
+0"
+#550
+b101 !
+b101 ,
+b101 -
+b101 +
+b101 .
+b101 2
+1"
+0'
+1&
+#600
+0"
+#650
+b11 !
+b11 ,
+b11 -
+b11 +
+b11 .
+b11 2
+1)
+1"
+b11 *
+b11 /
+b11 1
+b1 #
+b1 (
+b1 0
+1'
+#700
+0"
+#750
+1"
+1$
+#800
+0"
+#850
+1"
+#900
+0"
+#950
+1"

@@ -28,7 +28,7 @@ module dataMem(
 
   // initial
   initial begin
-    $readmemh("*.mem", my_memory);
+    $readmemh("test.mem", mem);
   end
 
 endmodule

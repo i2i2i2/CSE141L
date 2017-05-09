@@ -1,0 +1,36 @@
+#! /usr/local/Cellar/icarus-verilog/10.1.1/bin/vvp
+:ivl_version "10.1 (stable)" "(v10_1_1)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x7fe082e006f0 .scope module, "InstrMem" "InstrMem" 2 10;
+ .timescale 0 0;
+    .port_info 0 /INPUT 8 "pc"
+    .port_info 1 /OUTPUT 9 "Instr"
+o0x102a7e008 .functor BUFZ 9, C4<zzzzzzzzz>; HiZ drive
+v0x7fe082e00890_0 .net "Instr", 8 0, o0x102a7e008;  0 drivers
+v0x7fe082e10930_0 .net *"_s0", 8 0, L_0x7fe082e10d90;  1 drivers
+v0x7fe082e109d0_0 .net *"_s2", 9 0, L_0x7fe082e10e50;  1 drivers
+L_0x102ab0008 .functor BUFT 1, C4<00>, C4<0>, C4<0>, C4<0>;
+v0x7fe082e10a80_0 .net *"_s5", 1 0, L_0x102ab0008;  1 drivers
+v0x7fe082e10b30_0 .net "instr", 0 0, L_0x7fe082f00710;  1 drivers
+v0x7fe082e10c10 .array "instrMem", 255 0, 8 0;
+o0x102a7e0f8 .functor BUFZ 8, C4<zzzzzzzz>; HiZ drive
+v0x7fe082e10cb0_0 .net "pc", 7 0, o0x102a7e0f8;  0 drivers
+L_0x7fe082e10d90 .array/port v0x7fe082e10c10, L_0x7fe082e10e50;
+L_0x7fe082e10e50 .concat [ 8 2 0 0], o0x102a7e0f8, L_0x102ab0008;
+L_0x7fe082f00710 .part L_0x7fe082e10d90, 0, 1;
+    .scope S_0x7fe082e006f0;
+T_0 ;
+    %vpi_call 2 19 "$readmemh", "test.instr", v0x7fe082e10c10 {0 0 0};
+    %vpi_call 2 20 "$writememb", "testInstr", v0x7fe082e10c10 {0 0 0};
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "InstrMem.sv";
