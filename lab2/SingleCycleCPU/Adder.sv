@@ -19,7 +19,7 @@ module Adder(
 
   // extra wire
   wire[7:0]     add2_flip;
-  wire          ci_flag, co_flip;
+  wire          ci_flag, ci_flip, co_flip;
 
   // assign wire
   assign        add2_flip = {8{flip}} ^ add2;
