@@ -1,0 +1,275 @@
+{
+  "instr": {
+    "set": {
+      "pre": "0",
+      "opcode": null,
+      "imm": 8
+    },
+    "ldm0": {
+      "pre": "1",
+      "opcode": "000000",
+      "reg": 2
+    },
+    "ldm1": {
+      "pre": "1",
+      "opcode": "000001",
+      "reg": 2
+    },
+    "ldm2": {
+      "pre": "1",
+      "opcode": "000010",
+      "reg": 2
+    },
+    "ldm3": {
+      "pre": "1",
+      "opcode": "000011",
+      "reg": 2
+    },
+    "ldm4": {
+      "pre": "1",
+      "opcode": "000100",
+      "reg": 2
+    },
+    "ldm5": {
+      "pre": "1",
+      "opcode": "110111",
+      "reg": 2
+    },
+    "ldr1": {
+      "pre": "1",
+      "opcode": "000101",
+      "reg": 2
+    },
+    "ldr4": {
+      "pre": "1",
+      "opcode": "000110",
+      "reg": 2
+    },
+    "ldr5": {
+      "pre": "1",
+      "opcode": "000111",
+      "reg": 2
+    },
+    "add1": {
+      "pre": "1",
+      "opcode": "001000",
+      "reg": 2
+    },
+    "add4": {
+      "pre": "1",
+      "opcode": "001001",
+      "reg": 2
+    },
+    "add5": {
+      "pre": "1",
+      "opcode": "001010",
+      "reg": 2
+    },
+    "addf0": {
+      "pre": "1",
+      "opcode": "001011",
+      "reg": 2
+    },
+    "addf4": {
+      "pre": "1",
+      "opcode": "001100",
+      "reg": 2
+    },
+    "sub1": {
+      "pre": "1",
+      "opcode": "001101",
+      "reg": 2
+    },
+    "sub3": {
+      "pre": "1",
+      "opcode": "001110",
+      "reg": 2
+    },
+    "sub4": {
+      "pre": "1",
+      "opcode": "001111",
+      "reg": 2
+    },
+    "sub5": {
+      "pre": "1",
+      "opcode": "010000",
+      "reg": 2
+    },
+    "subf2": {
+      "pre": "1",
+      "opcode": "010001",
+      "reg": 2
+    },
+    "str1": {
+      "pre": "1",
+      "opcode": "010010",
+      "reg": 2
+    },
+    "str2": {
+      "pre": "1",
+      "opcode": "010011",
+      "reg": 2
+    },
+    "str3": {
+      "pre": "1",
+      "opcode": "010100",
+      "reg": 2
+    },
+    "stm0": {
+      "pre": "1",
+      "opcode": "010101",
+      "reg": 2
+    },
+    "stm1": {
+      "pre": "1",
+      "opcode": "010110",
+      "reg": 2
+    },
+    "stm3": {
+      "pre": "1",
+      "opcode": "010111",
+      "reg": 2
+    },
+    "stm4": {
+      "pre": "1",
+      "opcode": "011000",
+      "reg":2
+    },
+    "stm5": {
+      "pre": "1",
+      "opcode": "011001",
+      "reg": 2
+    },
+    "mov": {
+      "pre": "1",
+      "opcode": "011010",
+      "reg": 2
+    },
+    "srl": {
+      "pre": "1",
+      "opcode": "011011",
+      "reg": 2
+    },
+    "sra": {
+      "pre": "1",
+      "opcode": "011100",
+      "reg": 2
+    },
+    "srf": {
+      "pre": "1",
+      "opcode": "011101",
+      "reg": 2
+    },
+    "bnzr": {
+      "pre": "1",
+      "opcode": "011110",
+      "branch": 2
+    },
+    "bnuzr": {
+      "pre": "1",
+      "opcode": "011111",
+      "branch": 2
+    },
+    "b1ne31": {
+      "pre": "1",
+      "opcode": "100000",
+      "branch": 2
+    },
+    "dec1": {
+      "pre": "1",
+      "opcode": "100001"
+    },
+    "zero0": {
+      "pre": "1",
+      "opcode": "100010"
+    },
+    "zero2": {
+      "pre": "1",
+      "opcode": "100011"
+    },
+    "zero3": {
+      "pre": "1",
+      "opcode": "100100"
+    },
+    "zero4": {
+      "pre": "1",
+      "opcode": "100101"
+    },
+    "srl4": {
+      "pre": "1",
+      "opcode": "100110"
+    },
+    "sra5": {
+      "pre": "1",
+      "opcode": "100111"
+    },
+    "srf5": {
+      "pre": "1",
+      "opcode": "101000"
+    },
+    "slf0": {
+      "pre": "1",
+      "opcode": "101001"
+    },
+    "slf1": {
+      "pre": "1",
+      "opcode": "101010"
+    },
+    "slf2": {
+      "pre": "1",
+      "opcode": "101011"
+    },
+    "atos_2": {
+      "pre": "1",
+      "opcode": "101100"
+    },
+    "add3_n2": {
+      "pre": "1",
+      "opcode": "101101",
+      "reg": 2
+    },
+    "add4_n2": {
+      "pre": "1",
+      "opcode": "101110",
+      "reg": 2
+    },
+    "cp0_5": {
+      "pre": "1",
+      "opcode": "101111"
+    },
+    "add25": {
+      "pre": "1",
+      "opcode": "110000"
+    },
+    "sub25": {
+      "pre": "1",
+      "opcode": "110001"
+    },
+    "subf25": {
+      "pre": "1",
+      "opcode": "110010"
+    },
+    "inc_af0": {
+      "pre": "1",
+      "opcode": "110011"
+    },
+    "add0c25": {
+      "pre": "1",
+      "opcode": "110100"
+    },
+    "ld4m1": {
+      "pre": "1",
+      "opcode": "110101"
+    },
+    "halt": {
+      "pre": "1",
+      "opcode": "110110"
+    }
+  },
+  "regs": {
+    "$t0": "00",
+    "$t1": "01",
+    "$t2": "10",
+    "$t3": "11"
+  }
+}
