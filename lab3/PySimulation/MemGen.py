@@ -9,21 +9,25 @@
 from random import randint
 import os
 
+def padding0(str, num):
+    for i in range(len(str), num):
+        str = '0' + str
+    return str
+
 ##
 # int to 8-bit 2's complement hex
 # @param    integer to convert
 # @return   hex string of 2's complement
 ##
 def int2hex(num):
-    num += 256
-    return hex(num)[-2:] + "\n"
+    return padding0(hex(num)[2:], 2) + "\n"
 
 ##
 # random number
 # @return   hex of random 8-bit number
 ##
 def randomNum():
-    return int2hex(randint(-128, 127))
+    return int2hex(randint(0, 255))
 
 ##
 # random positive number
@@ -36,9 +40,9 @@ mem = ""
 
 # x msw lsw, y msw lsw
 mem += randomPosNum()
-mem += randomNum()
+mem += int2hex(randint(0, 255) & -8)
 mem += randomPosNum()
-mem += randomNum()
+mem += int2hex(randint(0, 255) & -8)
 
 #random fill position 5 to 127
 for i in range(5, 128):

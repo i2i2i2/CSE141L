@@ -14,7 +14,7 @@
     str1    $t1             ! store lsw of x to $t1
     str2    $t2             ! store msw of y to $t2
     str3    $t3             ! store lsw of y to $t3
-    set     64              ! set $t0 to 0100 0000         (14)
+    set     128             ! set $t0 to 1000 0000         (14)
 
 loop-msw:
     sra5                    ! shift x msw, set shift-out to $flag

@@ -1,19 +1,31 @@
-
-
+##############################################################################
+# Compile Assembly                                                           #
+##############################################################################
 compile: compile-CORDIC compile-StrCmp compile-Division compile-Custom
 
-compile-CORDIC:
+compile-CORDIC: TestCORDIC/instr
+
+TestCORDIC/instr: TestCORDIC/CORDIC.as
 	@make -C TestCORDIC compile
 
-compile-StrCmp:
+compile-StrCmp: TestStrCmp/instr
+
+TestStrCmp/instr: StringMatch.as
 	@make -C TestStrCmp compile
 
-compile-Division:
+compile-Division: TestDivision/instr
+
+TestDivision/instr: TestDivision/Division.as
 	@make -C TestDivision compile
 
-compile-Custom:
+compile-Custom: TestCustom/instr
+
+TestCustom/instr: TestCustom/test.as
 	@make -C TestCustom compile
 
+##############################################################################
+# Build CPU                                                                  #
+##############################################################################
 build: Bin/CPU.vvp
 
 Bin/CPU.vvp: $(wildcard CPU/*.sv)
@@ -25,11 +37,30 @@ Bin/CPU.vvp: $(wildcard CPU/*.sv)
 		-o Bin/CPU.vvp \
 		CPU/SingleCycleCPU.sv
 
+##############################################################################
+# Create Test memory                                                         #
+##############################################################################
 mem: Bin/mem
-	cp Bin/mem TestCORDIC
-	cp Bin/mem TestStrCmp
-	cp Bin/mem TestCustom
-	cp Bin/mem TestDivision
 
-Bin/mem: PySimulation/MemGen.py
+Bin/mem:
 	PySimulation/MemGen.py
+
+##############################################################################
+# Create ref solution                                                        #
+##############################################################################
+ref: ref-CORDIC ref-StrCmp ref-Division
+
+ref-CORDIC: TestCORDIC/ref_mem
+
+TestCORDIC/ref_mem: Bin/mem
+	PySimulation/CORDIC.py
+
+ref-StrCmp: TestStrCmp/ref_mem
+
+TestStrCmp/ref_mem: Bin/mem
+	PySimulation/StrCmp.py
+
+ref-Division: TestDivision/ref_mem
+
+TestDivision/ref_mem: Bin/mem
+	PySimulation/Division.py
