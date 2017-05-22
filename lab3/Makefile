@@ -10,7 +10,7 @@ TestCORDIC/instr: TestCORDIC/CORDIC.as
 
 compile-StrCmp: TestStrCmp/instr
 
-TestStrCmp/instr: StringMatch.as
+TestStrCmp/instr: TestStrCmp/StringMatch.as
 	@make -C TestStrCmp compile
 
 compile-Division: TestDivision/instr
@@ -28,7 +28,7 @@ TestCustom/instr: TestCustom/test.as
 ##############################################################################
 build: Bin/CPU.vvp
 
-Bin/CPU.vvp: $(wildcard CPU/*.sv)
+Bin/CPU.vvp: $(wildcard CPU/*.sv) $(wildcard CPU/*/*.sv)
 	iverilog -I CPU/ALU \
 		-I CPU/DataMem \
 		-I CPU/InstrDecode \
@@ -40,7 +40,23 @@ Bin/CPU.vvp: $(wildcard CPU/*.sv)
 ##############################################################################
 # Create Test memory                                                         #
 ##############################################################################
-mem: Bin/mem
+mem: TestCORDIC/mem TestStrCmp/mem TestCustom/mem TestDivision/mem
+
+newMem:
+	rm Bin/mem
+	make mem
+
+TestCORDIC/mem: Bin/mem
+	cp Bin/mem TestCORDIC
+
+TestStrCmp/mem: Bin/mem
+	cp Bin/mem TestStrCmp
+
+TestCustom/mem: Bin/mem
+	cp Bin/mem TestCustom
+
+TestDivision/mem: Bin/mem
+	cp Bin/mem TestDivision
 
 Bin/mem:
 	PySimulation/MemGen.py
@@ -52,15 +68,19 @@ ref: ref-CORDIC ref-StrCmp ref-Division
 
 ref-CORDIC: TestCORDIC/ref_mem
 
-TestCORDIC/ref_mem: Bin/mem
+TestCORDIC/ref_mem: Bin/mem PySimulation/CORDIC.py
 	PySimulation/CORDIC.py
 
 ref-StrCmp: TestStrCmp/ref_mem
 
-TestStrCmp/ref_mem: Bin/mem
+TestStrCmp/ref_mem: Bin/mem PySimulation/StrCmp.py
 	PySimulation/StrCmp.py
 
 ref-Division: TestDivision/ref_mem
 
-TestDivision/ref_mem: Bin/mem
+TestDivision/ref_mem: Bin/mem PySimulation/Division.py
 	PySimulation/Division.py
+
+##############################################################################
+# Run the simulation                                                         #
+##############################################################################

@@ -5,13 +5,25 @@ compile: instr
 instr: StringMatch.as
 	$(COMPILER) StringMatch.as
 
-build: ../CPU.vvp
+build: ../Bin/CPU.vvp
 
-../CPU.vvp: $(wildcard ../CPU/*.sv)
+../Bin/CPU.vvp: $(wildcard ../CPU/*.sv) $(wildcard ../CPU/DataMem/*.sv) $(wildcard ../CPU/ALU/*.sv) \
+		$(wildcard ../CPU/Regs/*.sv) $(wildcard ../CPU/InstrFetch/*.sv) $(wildcard ../CPU/InstrDecode*.sv)
 	@make -C .. build
 
 mem: ../Bin/mem
 	cp ../Bin/mem .
 
-../bin/mem: ../PySimulation/MemGen.py
+../Bin/mem: ../PySimulation/MemGen.py
 	@make -C .. mem
+
+ref: ref_mem
+
+ref_mem: ../PySimulation/StrCmp.py
+	@make -C .. TestStrCmp/ref_mem
+
+run: cpu.vcd
+	open -a Scansion cpu.vcd
+
+cpu.vcd: build mem
+	vvp ../Bin/CPU.vvp ../Bin/mem

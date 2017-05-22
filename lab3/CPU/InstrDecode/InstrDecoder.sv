@@ -16,7 +16,7 @@ module InstrDecode(
   input[8:0]        instr,        // 9-bit instruction code
   output reg        writeBranch,  // if take branch, & with ALU computed result
   output reg[1:0]   branch,       // 2-bit control which branch in lookup table
-  output reg        halt,         // stop updating pc.
+  output reg        halt,         // stop updating pc
   output reg[8:0]   control,      // 9-bit ALU control
   output reg[2:0]   read1,        // first output of regfile
   output reg        isReg1,       // if first output from regular register
@@ -442,7 +442,7 @@ module InstrDecode(
           // result store to $t_
           isWrite = 1'b1; writeReg = {1'b0, instr[1:0]}; isRegW = 1'b1;
           // control signal
-          control = 9'bx101xxxxx;
+          control = 9'b1101xxxx0;
           // write source from ALUout
           regSrc = 3'b001;
           // dont cares: read2, isReg2, isReg3, regData, branch
@@ -457,7 +457,7 @@ module InstrDecode(
           // result store to $t_
           isWrite = 1'b1; writeReg = {1'b0, instr[1:0]}; isRegW = 1'b1;
           // control signal
-          control = 9'bx100xxxxx;
+          control = 9'b1100xxxx0;
           // write source from ALUout
           regSrc = 3'b001;
           // dont cares: read2, isReg2, isReg3, regData, branch
@@ -472,7 +472,7 @@ module InstrDecode(
           // result store to $t_
           isWrite = 1'b1; writeReg = {1'b0, instr[1:0]}; isRegW = 1'b1;
           // control signal
-          control = 9'bx110xxxxx;
+          control = 9'b1110xxxx0;
           // write source from ALUout
           regSrc = 3'b001;
           // dont cares: read2, isReg2, isReg3, regData, branch
@@ -582,12 +582,12 @@ module InstrDecode(
           // result store to $acc4
           isWrite = 1'b1; writeReg = 3'b100; isRegW = 1'b0;
           // control signal
-          control = 9'bx101xxxxx;
+          control = 9'b1101xxxx0;
           // write source from ALUout
           regSrc = 3'b001;
           // dont cares: read2, isReg2, isReg3, regData, branch
         end
-        6'b100111: begin  // sra5
+        6'b100111: begin  // srl5
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
           // write flag
@@ -597,7 +597,7 @@ module InstrDecode(
           // result store to $acc5
           isWrite = 1'b1; writeReg = 3'b101; isRegW = 1'b0;
           // control signal
-          control = 9'bx100xxxxx;
+          control = 9'b1101xxxx0;
           // write source from ALUout
           regSrc = 3'b001;
           // dont cares: read2, isReg2, isReg3, regData, branch
@@ -612,7 +612,7 @@ module InstrDecode(
           // result store to $acc5
           isWrite = 1'b1; writeReg = 3'b101; isRegW = 1'b0;
           // control signal
-          control = 9'bx110xxxxx;
+          control = 9'b1110xxxx0;
           // write source from ALUout
           regSrc = 3'b001;
           // dont cares: read2, isReg2, isReg3, regData, branch
@@ -627,7 +627,7 @@ module InstrDecode(
           // result store to $acc0
           isWrite = 1'b1; writeReg = 3'b000; isRegW = 1'b0;
           // control signal
-          control = 9'bx111xxxxx;
+          control = 9'b1111xxxx0;
           // write source from ALUout
           regSrc = 3'b001;
           // dont cares: read2, isReg2, isReg3, regData, branch
@@ -642,7 +642,7 @@ module InstrDecode(
           // result store to $acc1
           isWrite = 1'b1; writeReg = 3'b001; isRegW = 1'b0;
           // control signal
-          control = 9'bx111xxxxx;
+          control = 9'b1111xxxx0;
           // write source from ALUout
           regSrc = 3'b001;
           // dont cares: read2, isReg2, isReg3, regData, branch
@@ -657,7 +657,7 @@ module InstrDecode(
           // result store to $acc2
           isWrite = 1'b1; writeReg = 3'b010; isRegW = 1'b0;
           // control signal
-          control = 9'bx111xxxxx;
+          control = 9'b1111xxxx0;
           // write source from ALUout
           regSrc = 3'b001;
           // dont cares: read2, isReg2, isReg3, regData, branch
@@ -818,6 +818,74 @@ module InstrDecode(
           // disable all write
           writeBranch = 1'b0; isWrite = 1'b0; writeFlip = 1'b0;
           writeFlag = 1'b0; memOp = 1'b0;
+        end
+        6'b111000: begin // dup0
+          // other write control stay at 0
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          branch = 1'b0; memOp = 1'b0; writeFlag = 1'b0;
+          // set write to $dup
+          isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b110;
+          // set source to read1 $t0
+          read1 = 3'b000; isReg1 = 1'b1;
+          // set reg data src from read1
+          regSrc = 3'b100;
+          // dont cares: read2, isReg2, isReg3, control, regData, branch
+        end
+        6'b111001: begin // slld
+          // other write control stay at 0
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          // write flag
+          writeFlag = 1'b1;
+          // read1 from $dup
+          read1 = 3'b110; isReg1 = 1'b0;
+          // result store to $dup
+          isWrite = 1'b1; writeReg = 3'b110; isRegW = 1'b0;
+          // control signal
+          control = 9'b0111xxxxx;
+          // write source from ALUout
+          regSrc = 3'b001;
+          // dont cares: read2, isReg2, isReg3, regData, branch
+        end
+        6'b111010: begin // bnzd
+          // other write control stay at 0
+          halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; isWrite = 1'b0;
+          // $dup goes to read1
+          read1 = 3'b110; isReg1 = 1'b0;
+          // branch true, arg is branch
+          writeBranch = 1'b1; branch = instr[1:0];
+          // control
+          control = 9'bxxxx01xxx;
+          // dont cares: read2, isReg2, isReg3, writeReg, isRegW, regData, regSrc
+        end
+        6'b111011: begin // srfc2
+          // other write control stay at 0
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          // write flag
+          writeFlag = 1'b1;
+          // read1 from $t_
+          read1 = {1'b0, instr[1:0]}; isReg1 = 1'b1;
+          // read2 from $acc2
+          read2 = 3'b010; isReg2 = 1'b0;
+          // result store to $t_
+          isWrite = 1'b1; writeReg = {1'b0, instr[1:0]}; isRegW = 1'b1;
+          // control signal
+          control = 9'b1110xxxx1;
+          // write source from ALUout
+          regSrc = 3'b001;
+          // dont cares: read2, isReg2, isReg3, regData, branch
+        end
+        6'b111100: begin // str0
+          // other write control stay at 0
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeFlag = 1'b0;
+          // set write to $t_
+          isWrite = 1'b1; isRegW = 1'b1; writeReg = {1'b0, instr[1:0]};
+          // set read from $acc0
+          read1 = 3'b000; isReg1 = 1'b0;
+          // set $t_ from read1
+          regSrc = 3'b100;
+          // don't cares: read2, isReg2, isReg3, control, regData, branch
         end
       endcase
     end

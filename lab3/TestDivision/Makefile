@@ -5,13 +5,24 @@ compile: instr
 instr: Division.as
 	$(COMPILER) Division.as
 
-build: ../CPU.vvp
+build: ../Bin/CPU.vvp
 
-../CPU.vvp: $(wildcard ../CPU/*.sv)
+../Bin/CPU.vvp: $(wildcard ../CPU/*.sv)
 	@make -C .. build
 
 mem: ../Bin/mem
 	cp ../Bin/mem .
 
-../bin/mem: ../PySimulation/MemGen.py
+../Bin/mem: ../PySimulation/MemGen.py
 	@make -C .. mem
+
+ref: ref_mem
+
+ref_mem: ../PySimulation/Division.py
+	@make -C .. TestDivision/ref_mem
+
+run: cpu.vcd
+	open -a Scansion cpu.vcd
+
+cpu.vcd: ../Bin/CPU.vvp ../Bin/mem
+	vvp ../Bin/CPU.vvp ../Bin/mem

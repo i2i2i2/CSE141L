@@ -1,8 +1,8 @@
-    set     24
+    set     3
     ldm3    $t0             ! load lsw of y to $acc3
-    set     16
+    set     2
     ldm2    $t0             ! load msw of y to $acc2
-    set     8
+    set     1
     ldm1    $t0             ! load lsw of x to $acc1
     set     0
     ldm0    $t0             ! load msw of x to $acc0
@@ -17,12 +17,6 @@
     set     128             ! set $t0 to 1000 0000         (14)
 
 loop-msw:
-    sra5                    ! shift x msw, set shift-out to $flag
-    srf     $t1             ! shift x lsw, set shift-in to $flag
-
-    sra     $t2             ! shift y msw, set shift-out to $flag
-    srf     $t3             ! shift y lsw, set shift-in to $flag
-
     atos_2                  ! set adder to subtracter if $acc2 negative
 
     add1    $t3
@@ -38,13 +32,22 @@ loop-msw:
     str2    $t2             ! store new msw of y to $t2
     str3    $t3             ! store new lsw of y to $t3
 
+    dup0                    ! duplicate $t0 for shifting
+shift-msw:
+    srl5                    ! shift x msw, set shift-out to $flag
+    srf     $t1             ! shift x lsw, set shift-in to $flag
+
+    srfc2   $t2             ! shift y msw, set shift-out to $flag
+    srf     $t3             ! shift y lsw, set shift-in to $flag
+
+    slld                    ! shift left logically the duplicate
+    bnzd    shift-msw       ! branch if the duplicate is not 0.
+
+end-shift-msw:
     srl     $t0             ! shift t0
     bnzr    loop-msw        ! backward                     (16*7)
 
-end-loop-msw:             ! $t1 now x >> 8, $t3 now y >> 8
-    sra     $t2             ! shift sign bit of y to $flag
-    srl     $t1             ! x always positive, always shift in 0
-    srf     $t3             ! shift in sign bit for the first loop
+end-loop-msw:               ! $t1 now x >> 8, $t3 now y >> 8
     mov     $t2             ! set $t0 = 2 to $t2, SOURCE of ZERO
     ldr5    $t0             ! set $acc5 to 0
     set     128             ! $t0 = 1000 0000              (6)
@@ -61,22 +64,29 @@ loop-lsw:
     add5    $t0
     addf4   $t2             ! add to angle or subtract to angle if flipped
 
-    str1    $t1             ! store lsw of x
-    srl     $t1             ! shift logical, x always positive
-    str3    $t3             ! store lsw of y
-    sra     $t3             ! shift arithmetically, y can be negative
+    str0    $t1             ! store msw of x
+    str2    $t3             ! store msw of y
 
+    dup0                    ! duplicate $t0 for shifting
+shift-lsw:
+    srf     $t1             ! shift x lsw, set shift-in to $flag
+    srfc2   $t3             ! shift y lsw, set shift-in to $flag
+
+    slld                    ! shift left logically the duplicate
+    bnzd    shift-lsw       ! branch if the duplicate is not 0
+
+end-shift-lsw:
     srl     $t0             ! shift right angle
     bnuzr   loop-lsw        ! loop till $t0 = 0000 1000    (13*4)
 
 end-loop:
-    set     5
+    set     4
     stm0    $t0
-    set     6
+    set     5
     stm1    $t0
-    set     7
+    set     6
     stm4    $t0
-    set     8
+    set     7
     stm5    $t0             !                              (8)
 
     halt                    ! store and stop         Total (193)

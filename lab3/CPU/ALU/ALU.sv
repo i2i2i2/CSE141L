@@ -8,6 +8,7 @@
                 output  result, flagout, flipout, branch
                 control
                   8     if add 1 or sub1
+                        or if use 0 as shift-in
                   7     add or shift
                   6-5   add or shift's control
                     for shifter
@@ -24,6 +25,7 @@
                     10  add 1 if upper 4 bit of srcB srcC match
                     11  add flag ^ flip
                   0     if ignore flip bit
+                        or if use flip bit instead of flag bit as shift-in
 *****************************************************************************/
 `include "./Adder.sv"
 `include "Shifter.sv"
@@ -45,7 +47,7 @@ module ALU (
   wire[7:0]     srcAdd[0:3];
   wire[7:0]     addSrc;
   wire[7:0]     sum, shifted;
-  wire          calcFlip, addFlag, shiftFlag;
+  wire          calcFlip, addFlag, shiftFlag, calcFlag;
   wire          branches[0:3];
 
   // add src base on control[5,6]
@@ -69,11 +71,14 @@ module ALU (
   // find out flip
   assign        calcFlip = control[5] ^ ((!control[0]) & flipin);
 
+  // find out flag input of shifter
+  assign        calcFlag = control[8] & (control[0] ? srcB[7] : flagin);
+
   // set flip to srcA's sign bit, if write depend on decoder
   assign        flipout = srcA[7];
 
-  // module
-  Shifter ALUshifter(srcA, control[6:5], flagin, shifted, shiftFlag);
+  // modules
+  Shifter ALUshifter(srcA, control[6:5], calcFlag, shifted, shiftFlag);
   Adder ALUadder(srcA, addSrc, flagin, control[6], calcFlip, sum, addFlag);
 
   initial begin
