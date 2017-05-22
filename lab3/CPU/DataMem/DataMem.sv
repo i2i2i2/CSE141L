@@ -38,9 +38,9 @@ module DataMem(
     $readmemh("mem", mem);
   end
 
-  // write memory after 2000 cycle
+  // write memory after 2000 cycles
   initial begin
-    #18000  $writememb("sol_mem", mem);
+    #18000  $writememh("sol_mem", mem);
   end
 
 endmodule
