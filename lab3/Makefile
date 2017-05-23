@@ -40,6 +40,7 @@ Bin/CPU.vvp: $(wildcard CPU/*.sv) $(wildcard CPU/*/*.sv)
 ##############################################################################
 # Create memory                                                              #
 ##############################################################################
+<<<<<<< HEAD
 mem: CORDIC/mem StrCmp/mem Custom/mem Division/mem
 
 newMem:

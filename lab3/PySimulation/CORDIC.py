@@ -51,6 +51,7 @@ for i in range(0, 12):
 # print x
 # print y
 # print angle
+
 x = padding0(hex(x)[2:], 4)
 y = padding0(hex(y)[2:], 4)
 angle = padding0(hex((angle << 4) + 65536)[2:], 4)[-4:]
