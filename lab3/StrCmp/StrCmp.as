@@ -46,7 +46,7 @@ end-loop:
     srf5
     add0c25
 
-    !bbit    overflow
+    bbit    overflow
 
 no-overflow:
     set     9
@@ -57,6 +57,7 @@ no-overflow:
 overflow:
     set     255
     ldr1    $t0
+    set     9
     stm1    $t0
 
     halt

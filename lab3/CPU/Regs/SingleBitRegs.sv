@@ -25,6 +25,7 @@ module SingleBitRegs (
   // always output
   assign    flagout = flag;
   assign    flipout = flip;
+  assign    bitout = onebit;
 
   always @(posedge CLK) begin
     if (writeFlag) begin
@@ -33,7 +34,7 @@ module SingleBitRegs (
     if (writeFlip) begin
       flip <= flipin;
     end
-    if (writeBit) begin
+    if (writeBit && bitin) begin
       onebit <= bitin;
     end
   end

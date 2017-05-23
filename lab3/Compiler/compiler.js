@@ -57,6 +57,11 @@ assembly.forEach((line, index) => {
   // if line is a branch label
   if (line.length == 1 && line[0].substr(-1) == ':') {
     var label = line[0].substr(0, line[0].length - 1);
+    if (branches[label]) {
+      var tempIdx = branchTaken.indexOf(label);
+      branchTaken[tempIdx] = bitcodes.length;
+    }
+
     branches[label] = bitcodes.length;
     return;
   }
@@ -143,9 +148,7 @@ function processBranch(line, index, instr) {
   // check branch
   var label = branches[line[1]];
   if (!label) {
-    errorGen(index, "Invalid Instruction Format: "
-        + "Unknown branch label");
-    return null;
+    label = branches[line[1]] = line[1];
   }
 
   // check maximum number of branch exceed?
