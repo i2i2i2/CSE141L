@@ -19,18 +19,19 @@ module SingleCycleCPU;
   wire[2:0]     read1, read2, writeReg, regSrc;
   wire[1:0]     branchCtrl;
   wire          memOp, writeBranch, isReg1, isReg2, isReg3, isWrite, writeFlip,
-                isRegW, writeFlag, flag0, flag1, flip0, flip1, branchResult, halt;
+                isRegW, writeFlag, flag0, flag1, flip0, flip1, branchResult, halt,
+                onebit, writeBit;
 
   reg           init, CLK;
 
   InstrFetch IF(init, halt, writeBranch, branchResult, branchCtrl, CLK, instr);
   InstrDecode ID(instr, writeBranch, branchCtrl, halt, control, read1, isReg1,
       read2, isReg2, isReg3, isWrite, writeReg, isRegW, regData, writeFlip,
-      writeFlag, memOp, regSrc);
+      writeFlag, writeBit, memOp, regSrc);
   RegsFile RF(read1, isReg1, read2, isReg2, isReg3, isWrite, writeReg,
       result, regData, dataOut, srcA, regSrc, isRegW, flip0, writeFlip,
-      flag0, writeFlag, CLK, srcA, srcB, srcC, flip1, flag1);
-  ALU ALU0(srcA, srcB, srcC, flag1, flip1, control, result, flag0, flip0, branchResult);
+      flag0, writeFlag, flag0, writeBit, CLK, srcA, srcB, srcC, flip1, flag1, onebit);
+  ALU ALU0(srcA, srcB, srcC, flag1, flip1, onebit, control, result, flag0, flip0, branchResult);
   DataMem M(srcA, srcB, memOp, CLK, dataOut);
 
   // initial

@@ -3,25 +3,25 @@
 ##############################################################################
 compile: compile-CORDIC compile-StrCmp compile-Division compile-Custom
 
-compile-CORDIC: TestCORDIC/instr
+compile-CORDIC: CORDIC/instr
 
-TestCORDIC/instr: TestCORDIC/CORDIC.as
-	@make -C TestCORDIC compile
+CORDIC/instr: CORDIC/CORDIC.as
+	@make -C CORDIC compile
 
-compile-StrCmp: TestStrCmp/instr
+compile-StrCmp: StrCmp/instr
 
-TestStrCmp/instr: TestStrCmp/StringMatch.as
-	@make -C TestStrCmp compile
+StrCmp/instr: StrCmp/StrCmp.as
+	@make -C StrCmp compile
 
-compile-Division: TestDivision/instr
+compile-Division: Division/instr
 
-TestDivision/instr: TestDivision/Division.as
-	@make -C TestDivision compile
+Division/instr: Division/Division.as
+	@make -C Division compile
 
-compile-Custom: TestCustom/instr
+compile-Custom: Custom/instr
 
-TestCustom/instr: TestCustom/test.as
-	@make -C TestCustom compile
+Custom/instr: Custom/.as
+	@make -C Custom compile
 
 ##############################################################################
 # Build CPU                                                                  #
@@ -38,25 +38,25 @@ Bin/CPU.vvp: $(wildcard CPU/*.sv) $(wildcard CPU/*/*.sv)
 		CPU/SingleCycleCPU.sv
 
 ##############################################################################
-# Create Test memory                                                         #
+# Create memory                                                              #
 ##############################################################################
-mem: TestCORDIC/mem TestStrCmp/mem TestCustom/mem TestDivision/mem
+mem: CORDIC/mem StrCmp/mem Custom/mem Division/mem
 
 newMem:
 	rm Bin/mem
 	make mem
 
-TestCORDIC/mem: Bin/mem
-	cp Bin/mem TestCORDIC
+CORDIC/mem: Bin/mem
+	cp Bin/mem CORDIC
 
-TestStrCmp/mem: Bin/mem
-	cp Bin/mem TestStrCmp
+StrCmp/mem: Bin/mem
+	cp Bin/mem StrCmp
 
-TestCustom/mem: Bin/mem
-	cp Bin/mem TestCustom
+Custom/mem: Bin/mem
+	cp Bin/mem Custom
 
-TestDivision/mem: Bin/mem
-	cp Bin/mem TestDivision
+Division/mem: Bin/mem
+	cp Bin/mem Division
 
 Bin/mem:
 	PySimulation/MemGen.py
@@ -66,19 +66,19 @@ Bin/mem:
 ##############################################################################
 ref: ref-CORDIC ref-StrCmp ref-Division
 
-ref-CORDIC: TestCORDIC/ref_mem
+ref-CORDIC: CORDIC/ref_mem
 
-TestCORDIC/ref_mem: Bin/mem PySimulation/CORDIC.py
+CORDIC/ref_mem: Bin/mem PySimulation/CORDIC.py
 	PySimulation/CORDIC.py
 
-ref-StrCmp: TestStrCmp/ref_mem
+ref-StrCmp: StrCmp/ref_mem
 
-TestStrCmp/ref_mem: Bin/mem PySimulation/StrCmp.py
+StrCmp/ref_mem: Bin/mem PySimulation/StrCmp.py
 	PySimulation/StrCmp.py
 
-ref-Division: TestDivision/ref_mem
+ref-Division: Division/ref_mem
 
-TestDivision/ref_mem: Bin/mem PySimulation/Division.py
+Division/ref_mem: Bin/mem PySimulation/Division.py
 	PySimulation/Division.py
 
 ##############################################################################

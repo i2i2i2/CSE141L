@@ -22,7 +22,7 @@
                     11  branch if $acc1 not equal to 31
                   2-1   00 for normal, 01 - 11 for different addition
                     01  add 1 if srcB not negative
-                    10  add 1 if upper 4 bit of srcB srcC match
+                    10  add 1 if lower 4 bit of srcB srcC match
                     11  add flag ^ flip
                   0     if ignore flip bit
                         or if use flip bit instead of flag bit as shift-in
@@ -36,6 +36,7 @@ module ALU (
   input[7:0]    srcC,           // third src
   input         flagin,         // overflow flag
   input         flipin,         // flip flag
+  input         bitin,          // special bit
   input[8:0]    control,        // control signal
   output[7:0]   result,         // computed result
   output        flagout,        // new overflow flag
@@ -53,12 +54,12 @@ module ALU (
   // add src base on control[5,6]
   assign        srcAdd[0] = srcB;
   assign        srcAdd[1] = {8{!srcB[7]}} & srcC;
-  assign        srcAdd[2] = {7'b0000000, ~|(srcB[7:4] ^ srcC[7:4])};
+  assign        srcAdd[2] = {7'b0000000, ~|(srcB[3:0] ^ srcC[3:0])};
   assign        srcAdd[3] = {7'b0000000, flagin ^ flipin};
   assign        addSrc = control[8]? 8'b00000001 : srcAdd[control[2:1]];
 
   // branch src
-  assign        branches[0] = 1'b0;
+  assign        branches[0] = bitin;
   assign        branches[1] = |srcA;
   assign        branches[2] = |srcA[7:4];
   assign        branches[3] = |(srcA ^ 8'b00011111);
@@ -81,8 +82,4 @@ module ALU (
   Shifter ALUshifter(srcA, control[6:5], calcFlag, shifted, shiftFlag);
   Adder ALUadder(srcA, addSrc, flagin, control[6], calcFlip, sum, addFlag);
 
-  initial begin
-    $dumpfile("reg.vcd");
-    $dumpvars(0, srcAdd[1]);
-  end
 endmodule

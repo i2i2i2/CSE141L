@@ -30,12 +30,15 @@ module RegsFile(
   input         writeFlip,    // is write flip bit
   input         flagin,       // input flag bit
   input         writeFlag,    // is write flag bit
+  input         bitin,
+  input         writeBit,
   input         CLK,
   output[7:0]   reg1,         // data in read1
   output[7:0]   reg2,         // data in read2
   output[7:0]   reg3,         // $acc5, always outputting
   output        flipout,      // 1-bit flip output
-  output        flagout       // 1-bit flag output
+  output        flagout,      // 1-bit flag output
+  output        bitout        // 1-bit output
 );
 
   // wires
@@ -63,6 +66,6 @@ module RegsFile(
   // connect module
   AccumulatorRegs accReg(read1, read2, isWriteAcc, writeReg, writeData, CLK, outAcc1, outAcc2, outAcc3);
   RegularRegs regReg(read1[1:0], read2[1:0], isWriteReg, writeReg[1:0], writeData, CLK, outReg1, outReg2, outReg3);
-  SingleBitRegs bitReg(flipin, flagin, writeFlip, writeFlag, CLK, flipout, flagout);
+  SingleBitRegs bitReg(flipin, flagin, bitin, writeFlip, writeFlag, writeBit, CLK, flipout, flagout, bitout);
 
 endmodule

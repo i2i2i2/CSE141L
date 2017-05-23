@@ -29,6 +29,7 @@ module InstrDecode(
   output reg[7:0]   regData,      // 8-bit to write to register
   output reg        writeFlip,    // is write to flip
   output reg        writeFlag,    // is write to flag
+  output reg        writeBit,     // is write to bit
   output reg        memOp,        // 0 for read, 1 for write, no 2 at same time
   output reg[2:0]   regSrc        // register write Data source
                               //    000 for 0,       001 for ALUOut
@@ -39,14 +40,14 @@ module InstrDecode(
   // initialize write signal to 0
   initial begin
     writeBranch = 1'b0; isWrite = 1'b0; writeFlip = 1'b0;
-    writeFlag = 1'b0; memOp = 1'b0;
+    writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
   end
 
   // always at instr change
   always @ (instr) begin
     if (!instr[8]) begin   // set imm
       // other write control stay at 0
-      writeBranch = 1'b0; halt = 1'b0; memOp = 1'b0;
+      writeBranch = 1'b0; halt = 1'b0; memOp = 1'b0; writeBit = 1'b0;
       writeFlip = 1'b0; writeFlag = 1'b0; branch = 1'b0;
       // set write to $t0
       isWrite = 1'b1; isRegW = 1'b1; writeReg = 3'b000;
@@ -59,7 +60,7 @@ module InstrDecode(
         6'b000000: begin  // ldm0
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc0
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b000;
           // read from memory location at args
@@ -71,7 +72,7 @@ module InstrDecode(
         6'b000001: begin  // ldm1
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc1
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b001;
           // read from memory location at args
@@ -83,7 +84,7 @@ module InstrDecode(
         6'b000010: begin  // ldm2
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc2
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b010;
           // read from memory location at args
@@ -95,7 +96,7 @@ module InstrDecode(
         6'b000011: begin  // ldm3
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; branch = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; branch = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc3
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b011;
           // read from memory location at args
@@ -107,7 +108,7 @@ module InstrDecode(
         6'b000100: begin  // ldm4
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc5
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b100;
           // read from memory location at args
@@ -119,7 +120,7 @@ module InstrDecode(
         6'b110111: begin  // ldm5
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc5
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b101;
           // read from memory location at args
@@ -131,7 +132,7 @@ module InstrDecode(
         6'b000101: begin  // ldr1
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc5
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b001;
           // read from args
@@ -143,7 +144,7 @@ module InstrDecode(
         6'b000110: begin  // ldr4
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc4
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b100;
           // read from args
@@ -155,7 +156,7 @@ module InstrDecode(
         6'b000111: begin  // ldr5
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc5
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b101;
           // read from args
@@ -166,7 +167,8 @@ module InstrDecode(
         end
         6'b001000: begin  // add1
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc1
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b001;
           // set flag
@@ -182,7 +184,8 @@ module InstrDecode(
         end
         6'b001001: begin  // add4
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc4
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b100;
           // set flag
@@ -198,7 +201,8 @@ module InstrDecode(
         end
         6'b001010: begin  // add5
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc5
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b101;
           // set flag
@@ -214,7 +218,8 @@ module InstrDecode(
         end
         6'b001011: begin  // addf0
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc0
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b000;
           // set flag
@@ -230,7 +235,8 @@ module InstrDecode(
         end
         6'b001100: begin  // addf4
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc4
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b100;
           // set flag
@@ -246,7 +252,8 @@ module InstrDecode(
         end
         6'b001101: begin  // sub1
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc1
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b001;
           // set flag
@@ -262,7 +269,8 @@ module InstrDecode(
         end
         6'b001110: begin  // sub3
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc3
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b011;
           // set flag
@@ -278,7 +286,8 @@ module InstrDecode(
         end
         6'b001111: begin  // sub4
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc4
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b100;
           // set flag
@@ -294,7 +303,8 @@ module InstrDecode(
         end
         6'b010000: begin  // sub5
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc5
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b101;
           // set flag
@@ -310,7 +320,8 @@ module InstrDecode(
         end
         6'b010001: begin  // subf2
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc2
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b010;
           // set flag
@@ -327,7 +338,7 @@ module InstrDecode(
         6'b010010: begin  // str1
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; writeFlag = 1'b0;
+          memOp = 1'b0; writeFlag = 1'b0; writeBit = 1'b0;
           // set write to $t_
           isWrite = 1'b1; isRegW = 1'b1; writeReg = {1'b0, instr[1:0]};
           // set read from $acc1
@@ -339,7 +350,7 @@ module InstrDecode(
         6'b010011: begin  // str2
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; writeFlag = 1'b0;
+          memOp = 1'b0; writeFlag = 1'b0; writeBit = 1'b0;
           // set write to $t_
           isWrite = 1'b1; isRegW = 1'b1; writeReg = {1'b0, instr[1:0]};
           // set read from $acc2
@@ -351,7 +362,7 @@ module InstrDecode(
         6'b010100: begin  // str3
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; writeFlag = 1'b0;
+          memOp = 1'b0; writeFlag = 1'b0; writeBit = 1'b0;
           // set write to $t_
           isWrite = 1'b1; isRegW = 1'b1; writeReg = {1'b0, instr[1:0]};
           // set read from $acc3
@@ -363,7 +374,7 @@ module InstrDecode(
         6'b010101: begin  // stm0
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          isWrite = 1'b0; writeFlag = 1'b0;
+          isWrite = 1'b0; writeFlag = 1'b0; writeBit = 1'b0;
           // set write mem
           memOp = 1'b1;
           // set read from $t_
@@ -375,7 +386,7 @@ module InstrDecode(
         6'b010110: begin  // stm1
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          isWrite = 1'b0; writeFlag = 1'b0;
+          isWrite = 1'b0; writeFlag = 1'b0; writeBit = 1'b0;
           // set write mem
           memOp = 1'b1;
           // set read from $t_
@@ -387,7 +398,7 @@ module InstrDecode(
         6'b010111: begin  // stm3
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          isWrite = 1'b0; writeFlag = 1'b0;
+          isWrite = 1'b0; writeFlag = 1'b0; writeBit = 1'b0;
           // set write mem
           memOp = 1'b1;
           // set read from $t_
@@ -399,7 +410,7 @@ module InstrDecode(
         6'b011000: begin  // stm4
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          isWrite = 1'b0; writeFlag = 1'b0;
+          isWrite = 1'b0; writeFlag = 1'b0; writeBit = 1'b0;
           // set write mem
           memOp = 1'b1;
           // set read from $t_
@@ -411,7 +422,7 @@ module InstrDecode(
         6'b011001: begin  // stm5
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          isWrite = 1'b0; writeFlag = 1'b0;
+          isWrite = 1'b0; writeFlag = 1'b0; writeBit = 1'b0;
           // set write mem
           memOp = 1'b1;
           // set read from $t_
@@ -422,7 +433,7 @@ module InstrDecode(
         end
         6'b011010: begin  // mov
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; writeBit = 1'b0;
           branch = 1'b0; memOp = 1'b0; writeFlag = 1'b0;
           // set write to $t_
           isWrite = 1'b1; isRegW = 1'b1; writeReg = {1'b0, instr[1:0]};
@@ -434,7 +445,8 @@ module InstrDecode(
         end
         6'b011011: begin  // srl
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // write flag
           writeFlag = 1'b1;
           // read1 from $t_
@@ -449,7 +461,8 @@ module InstrDecode(
         end
         6'b011100: begin  // sra
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // write flag
           writeFlag = 1'b1;
           // read1 from $t_
@@ -464,7 +477,8 @@ module InstrDecode(
         end
         6'b011101: begin  // srf
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // write flag
           writeFlag = 1'b1;
           // read1 from $t_
@@ -480,7 +494,7 @@ module InstrDecode(
         6'b011110: begin  // bnzr
           // other write control stay at 0
           halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; isWrite = 1'b0;
+          memOp = 1'b0; isWrite = 1'b0; writeBit = 1'b0;
           // $t0 goes to read1
           read1 = 3'b000; isReg1 = 1'b1;
           // branch true, arg is branch
@@ -492,7 +506,7 @@ module InstrDecode(
         6'b011111: begin  // bnuzr
           // other write control stay at 0
           halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; isWrite = 1'b0;
+          memOp = 1'b0; isWrite = 1'b0; writeBit = 1'b0;
           // $t0 goes to read1
           read1 = 3'b000; isReg1 = 1'b1;
           // branch true, arg is branch
@@ -504,7 +518,7 @@ module InstrDecode(
         6'b100000: begin  // b1ne31
           // other write control stay at 0
           halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; isWrite = 1'b0;
+          memOp = 1'b0; isWrite = 1'b0; writeBit = 1'b0;
           // $acc1 goes to read1
           read1 = 3'b001; isReg1 = 1'b0;
           // branch true, arg is branch
@@ -515,7 +529,8 @@ module InstrDecode(
         end
         6'b100001: begin  // dec1
           // other write control stay at 0
-          halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0; writeBranch = 1'b0;
+          halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; writeBit = 1'b0;
           // set flag
           writeFlag = 1'b1;
           // $acc1 go to read1
@@ -531,7 +546,7 @@ module InstrDecode(
         6'b100010: begin  // zero0
           // other write control stay at 0
           halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; writeBranch = 1'b0;
+          memOp = 1'b0; writeBranch = 1'b0; writeBit = 1'b0;
           // write 0 to $acc0
           isWrite = 1'b1; writeReg = 3'b000; isRegW = 1'b0;
           // set $acc1 to 0
@@ -542,7 +557,7 @@ module InstrDecode(
         6'b100011: begin  // zero2
           // other write control stay at 0
           halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; writeBranch = 1'b0;
+          memOp = 1'b0; writeBranch = 1'b0; writeBit = 1'b0;
           // write 0 to $acc2
           isWrite = 1'b1; writeReg = 3'b010; isRegW = 1'b0;
           // set $acc1 to 0
@@ -553,7 +568,7 @@ module InstrDecode(
         6'b100100: begin  // zero3
           // other write control stay at 0
           halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; writeBranch = 1'b0;
+          memOp = 1'b0; writeBranch = 1'b0; writeBit = 1'b0;
           // write 0 to $acc3
           isWrite = 1'b1; writeReg = 3'b011; isRegW = 1'b0;
           // set $acc1 to 0
@@ -564,7 +579,7 @@ module InstrDecode(
         6'b100101: begin  // zero4
           // other write control stay at 0
           halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; writeBranch = 1'b0;
+          memOp = 1'b0; writeBranch = 1'b0; writeBit = 1'b0;
           // write 0 to $acc2
           isWrite = 1'b1; writeReg = 3'b100; isRegW = 1'b0;
           // set $acc1 to 0
@@ -574,7 +589,8 @@ module InstrDecode(
         end
         6'b100110: begin  // srl4
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // write flag
           writeFlag = 1'b1;
           // read1 from $acc4
@@ -589,7 +605,8 @@ module InstrDecode(
         end
         6'b100111: begin  // srl5
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // write flag
           writeFlag = 1'b1;
           // read1 from $acc5
@@ -604,7 +621,8 @@ module InstrDecode(
         end
         6'b101000: begin  // srf5
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // write flag
           writeFlag = 1'b1;
           // read1 from $acc5
@@ -619,7 +637,8 @@ module InstrDecode(
         end
         6'b101001: begin  // slf0
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // write flag
           writeFlag = 1'b1;
           // read1 from $acc0
@@ -634,7 +653,8 @@ module InstrDecode(
         end
         6'b101010: begin  // slf1
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // write flag
           writeFlag = 1'b1;
           // read1 from $acc1
@@ -649,7 +669,8 @@ module InstrDecode(
         end
         6'b101011: begin  // slf2
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // write flag
           writeFlag = 1'b1;
           // read1 from $acc2
@@ -675,7 +696,8 @@ module InstrDecode(
         end
         6'b101101: begin  // add3_n2
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; memOp = 1'b0; writeFlip = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; memOp = 1'b0;
+          writeFlip = 1'b0; writeBit = 1'b0;
           // write to $acc3
           writeFlag = 1'b1; isWrite = 1'b1;
           writeReg = 3'b011; isRegW = 1'b0;
@@ -693,7 +715,8 @@ module InstrDecode(
         end
         6'b101110: begin  // add4_n2
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; memOp = 1'b0; writeFlip = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; memOp = 1'b0;
+          writeFlip = 1'b0; writeBit = 1'b0;
           // write to $acc4
           writeFlag = 1'b1; isWrite = 1'b1;
           writeReg = 3'b100; isRegW = 1'b0;
@@ -712,7 +735,7 @@ module InstrDecode(
         6'b101111: begin  // cp0_5
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          branch = 1'b0; memOp = 1'b0; writeFlag = 1'b0;
+          branch = 1'b0; memOp = 1'b0; writeFlag = 1'b0; writeBit = 1'b0;
           // set write to $acc5
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b101;
           // set source to read1 $acc0
@@ -723,7 +746,8 @@ module InstrDecode(
         end
         6'b110000: begin  // add25
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc1
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b010;
           // set flag
@@ -739,7 +763,8 @@ module InstrDecode(
         end
         6'b110001: begin  // sub25
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc1
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b010;
           // set flag
@@ -755,7 +780,8 @@ module InstrDecode(
         end
         6'b110010: begin  // subf25
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc1
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b010;
           // set flag
@@ -771,7 +797,8 @@ module InstrDecode(
         end
         6'b110011: begin  // inc_af0
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc0
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b000;
           // set flag
@@ -790,7 +817,7 @@ module InstrDecode(
           // set write to $acc0
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b000;
           // set flag
-          writeFlag = 1'b1;
+          writeFlag = 1'b1; writeBit = 1'b1;
           // set ALUout to $acc1
           regSrc = 3'b001;
           // set operand $acc0, $acc2, $acc5
@@ -804,7 +831,7 @@ module InstrDecode(
         6'b110101: begin  // ld4m1
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b0;
           // set write to $acc4
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b100;
           // read from memory location at $acc1
@@ -817,12 +844,12 @@ module InstrDecode(
           halt = 1'b1;
           // disable all write
           writeBranch = 1'b0; isWrite = 1'b0; writeFlip = 1'b0;
-          writeFlag = 1'b0; memOp = 1'b0;
+          writeFlag = 1'b0; memOp = 1'b0; writeBit = 1'b1;
         end
         6'b111000: begin // dup0
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          branch = 1'b0; memOp = 1'b0; writeFlag = 1'b0;
+          branch = 1'b0; memOp = 1'b0; writeFlag = 1'b0; writeBit = 1'b1;
           // set write to $dup
           isWrite = 1'b1; isRegW = 1'b0; writeReg = 3'b110;
           // set source to read1 $t0
@@ -833,7 +860,8 @@ module InstrDecode(
         end
         6'b111001: begin // slld
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b1;
           // write flag
           writeFlag = 1'b1;
           // read1 from $dup
@@ -849,7 +877,7 @@ module InstrDecode(
         6'b111010: begin // bnzd
           // other write control stay at 0
           halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; isWrite = 1'b0;
+          memOp = 1'b0; isWrite = 1'b0; writeBit = 1'b1;
           // $dup goes to read1
           read1 = 3'b110; isReg1 = 1'b0;
           // branch true, arg is branch
@@ -860,7 +888,8 @@ module InstrDecode(
         end
         6'b111011: begin // srfc2
           // other write control stay at 0
-          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0; memOp = 1'b0;
+          writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; writeBit = 1'b1;
           // write flag
           writeFlag = 1'b1;
           // read1 from $t_
@@ -878,7 +907,7 @@ module InstrDecode(
         6'b111100: begin // str0
           // other write control stay at 0
           writeBranch = 1'b0; halt = 1'b0; writeFlip = 1'b0;
-          memOp = 1'b0; writeFlag = 1'b0;
+          memOp = 1'b0; writeFlag = 1'b0; writeBit = 1'b1;
           // set write to $t_
           isWrite = 1'b1; isRegW = 1'b1; writeReg = {1'b0, instr[1:0]};
           // set read from $acc0
@@ -886,6 +915,16 @@ module InstrDecode(
           // set $t_ from read1
           regSrc = 3'b100;
           // don't cares: read2, isReg2, isReg3, control, regData, branch
+        end
+        6'b111101: begin // bbit
+          // other write control stay at 0
+          halt = 1'b0; writeFlag = 1'b0; writeFlip = 1'b0;
+          memOp = 1'b0; isWrite = 1'b0; writeBit = 1'b1;
+          // branch true, arg is branch
+          writeBranch = 1'b1; branch = instr[1:0];
+          // control
+          control = 9'bxxxx00xxx;
+          // dont cares: read1, isReg1, read2, isReg2, isReg3, writeReg, isRegW, regData, regSrc
         end
       endcase
     end
