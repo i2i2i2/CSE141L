@@ -3,8 +3,7 @@
     ldm5    $t0           ! load last word at 95th mem to $acc5
     set     8
     ldm2    $t0           ! load word to match
-    zero0                 ! zero $acc0, pattern match counter   (7)
-
+    
 loop:
     dec1
     ld4m1                 ! load word at mem of counter number

@@ -1,19 +1,11 @@
-    set     128
+    set     127
     ldm0    $t0           ! $acc0 msw of dividend
-    set     129
+    set     128
     ldm1    $t0           ! $acc1 lsw of dividend
-    set     130
-    ldm5    $t0           ! $acc5 divisor
-    zero2                 ! zero $acc2 reminder                 (7)
+    set     129
+    ldm5    $t0           ! $acc5 divisor                        (7)
 
-    sub25                 ! $acc2 -= divisor, must negative
-    slf1
-    slf0
-    slf2                  ! (reminder, msw Dividend, lsw Dividend) << 1
-    add25                 ! $acc2 += divisor, since last op make $acc2 negative
-    set     64            ! set $t0 = 0100 0000
-    add3_n2 $t0           ! if $acc2 non negative and $t0 to msw of quotient
-    set     32            ! set $t0 = 0010 0000                 (8)
+    set     128            ! set $t0 = 1000 0000                 (8)
 
 loop-msw:
     atos_2                ! transit adder to subtracter if remainder negative
@@ -39,10 +31,10 @@ loop-lsw:
     srl     $t0           ! shift $t0
     bnzr    loop-lsw      !                                     (8*8)
 
-end-loop-msw:
-    set     126
+end-loop-lsw:
+    set     125
     stm3    $t0           ! store msw of quotient
-    set     127
+    set     126
     stm4    $t0           ! lsw of quotient                     (4)
 
     halt                  !                               Total (133)

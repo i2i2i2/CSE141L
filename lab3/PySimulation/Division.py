@@ -32,7 +32,11 @@ quotient = padding0(hex(quotient)[2:], 4)
 mem[125] = quotient[0:2]
 mem[126] = quotient[2:4]
 
+# add seperator
+for i in range(0, 16):
+    mem.insert(17 * i, "// 0x000000" + hex(i)[2:] + "0")
+
 # write to file
-sol_mem = open(os.path.realpath('.') + '/TestDivision/ref_mem', 'w+')
+sol_mem = open(os.path.realpath('.') + '/Division/ref_mem', 'w+')
 sol_mem.write('\n'.join(mem))
 sol_mem.close()

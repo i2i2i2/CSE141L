@@ -38,8 +38,10 @@ module AccumulatorRegs(
   // initial
   initial begin
     $dumpfile("cpu.vcd");
-    for (idx = 0; idx < 6; idx++)
+    for (idx = 0; idx < 6; idx++) begin
+      accumulators[idx] = 8'b00000000;
       $dumpvars(0, accumulators[idx]);
+    end
   end
 
 endmodule

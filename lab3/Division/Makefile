@@ -9,7 +9,6 @@ all: sol_mem ref_mem
 compile: instr
 
 instr: $(DIR).as
-	echo $(DIR).as
 	$(COMPILER) $(DIR).as
 
 ##############################################################################
@@ -47,7 +46,7 @@ cpu.vcd sol_mem: ../Bin/CPU.vvp mem instr
 	vvp ../Bin/CPU.vvp &> /dev/null
 
 ##############################################################################
-# Run new Test                                                               #
+# Run Test                                                                   #
 ##############################################################################
 newTest:
 	make newMem
@@ -55,6 +54,9 @@ newTest:
 
 newMem:
 	@make -C .. newMem
+
+diff: sol_mem ref_mem
+	diff sol_mem ref_mem
 
 ##############################################################################
 # Build Everything new                                                       #
